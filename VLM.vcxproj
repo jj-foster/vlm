@@ -1,0 +1,692 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\mesh_generator.cpp" />
+    <ClCompile Include="src\panel.cpp" />
+    <ClCompile Include="src\pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="src\plane.cpp" />
+    <ClCompile Include="src\VLM.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="includes\nlohmann\adl_serializer.hpp" />
+    <ClInclude Include="includes\nlohmann\byte_container_with_subtype.hpp" />
+    <ClInclude Include="includes\nlohmann\detail\abi_macros.hpp" />
+    <ClInclude Include="includes\nlohmann\detail\conversions\from_json.hpp" />
+    <ClInclude Include="includes\nlohmann\detail\conversions\to_chars.hpp" />
+    <ClInclude Include="includes\nlohmann\detail\conversions\to_json.hpp" />
+    <ClInclude Include="includes\nlohmann\detail\exceptions.hpp" />
+    <ClInclude Include="includes\nlohmann\detail\hash.hpp" />
+    <ClInclude Include="includes\nlohmann\detail\input\binary_reader.hpp" />
+    <ClInclude Include="includes\nlohmann\detail\input\input_adapters.hpp" />
+    <ClInclude Include="includes\nlohmann\detail\input\json_sax.hpp" />
+    <ClInclude Include="includes\nlohmann\detail\input\lexer.hpp" />
+    <ClInclude Include="includes\nlohmann\detail\input\parser.hpp" />
+    <ClInclude Include="includes\nlohmann\detail\input\position_t.hpp" />
+    <ClInclude Include="includes\nlohmann\detail\iterators\internal_iterator.hpp" />
+    <ClInclude Include="includes\nlohmann\detail\iterators\iteration_proxy.hpp" />
+    <ClInclude Include="includes\nlohmann\detail\iterators\iterator_traits.hpp" />
+    <ClInclude Include="includes\nlohmann\detail\iterators\iter_impl.hpp" />
+    <ClInclude Include="includes\nlohmann\detail\iterators\json_reverse_iterator.hpp" />
+    <ClInclude Include="includes\nlohmann\detail\iterators\primitive_iterator.hpp" />
+    <ClInclude Include="includes\nlohmann\detail\json_custom_base_class.hpp" />
+    <ClInclude Include="includes\nlohmann\detail\json_pointer.hpp" />
+    <ClInclude Include="includes\nlohmann\detail\json_ref.hpp" />
+    <ClInclude Include="includes\nlohmann\detail\macro_scope.hpp" />
+    <ClInclude Include="includes\nlohmann\detail\macro_unscope.hpp" />
+    <ClInclude Include="includes\nlohmann\detail\meta\call_std\begin.hpp" />
+    <ClInclude Include="includes\nlohmann\detail\meta\call_std\end.hpp" />
+    <ClInclude Include="includes\nlohmann\detail\meta\cpp_future.hpp" />
+    <ClInclude Include="includes\nlohmann\detail\meta\detected.hpp" />
+    <ClInclude Include="includes\nlohmann\detail\meta\identity_tag.hpp" />
+    <ClInclude Include="includes\nlohmann\detail\meta\is_sax.hpp" />
+    <ClInclude Include="includes\nlohmann\detail\meta\std_fs.hpp" />
+    <ClInclude Include="includes\nlohmann\detail\meta\type_traits.hpp" />
+    <ClInclude Include="includes\nlohmann\detail\meta\void_t.hpp" />
+    <ClInclude Include="includes\nlohmann\detail\output\binary_writer.hpp" />
+    <ClInclude Include="includes\nlohmann\detail\output\output_adapters.hpp" />
+    <ClInclude Include="includes\nlohmann\detail\output\serializer.hpp" />
+    <ClInclude Include="includes\nlohmann\detail\string_concat.hpp" />
+    <ClInclude Include="includes\nlohmann\detail\string_escape.hpp" />
+    <ClInclude Include="includes\nlohmann\detail\value_t.hpp" />
+    <ClInclude Include="includes\nlohmann\json.hpp" />
+    <ClInclude Include="includes\nlohmann\json_fwd.hpp" />
+    <ClInclude Include="includes\nlohmann\ordered_map.hpp" />
+    <ClInclude Include="includes\nlohmann\thirdparty\hedley\hedley.hpp" />
+    <ClInclude Include="includes\nlohmann\thirdparty\hedley\hedley_undef.hpp" />
+    <ClInclude Include="includes\NumCpp\Coordinates.hpp" />
+    <ClInclude Include="includes\NumCpp\Coordinates\Coordinate.hpp" />
+    <ClInclude Include="includes\NumCpp\Coordinates\Dec.hpp" />
+    <ClInclude Include="includes\NumCpp\Coordinates\degreeSeperation.hpp" />
+    <ClInclude Include="includes\NumCpp\Coordinates\RA.hpp" />
+    <ClInclude Include="includes\NumCpp\Coordinates\radianSeperation.hpp" />
+    <ClInclude Include="includes\NumCpp\Core.hpp" />
+    <ClInclude Include="includes\NumCpp\Core\Constants.hpp" />
+    <ClInclude Include="includes\NumCpp\Core\DataCube.hpp" />
+    <ClInclude Include="includes\NumCpp\Core\DtypeInfo.hpp" />
+    <ClInclude Include="includes\NumCpp\Core\Internal\Endian.hpp" />
+    <ClInclude Include="includes\NumCpp\Core\Internal\Error.hpp" />
+    <ClInclude Include="includes\NumCpp\Core\Internal\Filesystem.hpp" />
+    <ClInclude Include="includes\NumCpp\Core\Internal\StaticAsserts.hpp" />
+    <ClInclude Include="includes\NumCpp\Core\Internal\StdComplexOperators.hpp" />
+    <ClInclude Include="includes\NumCpp\Core\Internal\StlAlgorithms.hpp" />
+    <ClInclude Include="includes\NumCpp\Core\Internal\TypeTraits.hpp" />
+    <ClInclude Include="includes\NumCpp\Core\Internal\Version.hpp" />
+    <ClInclude Include="includes\NumCpp\Core\Shape.hpp" />
+    <ClInclude Include="includes\NumCpp\Core\Slice.hpp" />
+    <ClInclude Include="includes\NumCpp\Core\Timer.hpp" />
+    <ClInclude Include="includes\NumCpp\Core\Types.hpp" />
+    <ClInclude Include="includes\NumCpp\Filter.hpp" />
+    <ClInclude Include="includes\NumCpp\Filter\Boundaries\Boundaries1d\addBoundary1d.hpp" />
+    <ClInclude Include="includes\NumCpp\Filter\Boundaries\Boundaries1d\constant1d.hpp" />
+    <ClInclude Include="includes\NumCpp\Filter\Boundaries\Boundaries1d\mirror1d.hpp" />
+    <ClInclude Include="includes\NumCpp\Filter\Boundaries\Boundaries1d\nearest1d.hpp" />
+    <ClInclude Include="includes\NumCpp\Filter\Boundaries\Boundaries1d\reflect1d.hpp" />
+    <ClInclude Include="includes\NumCpp\Filter\Boundaries\Boundaries1d\trimBoundary1d.hpp" />
+    <ClInclude Include="includes\NumCpp\Filter\Boundaries\Boundaries1d\wrap1d.hpp" />
+    <ClInclude Include="includes\NumCpp\Filter\Boundaries\Boundaries2d\addBoundary2d.hpp" />
+    <ClInclude Include="includes\NumCpp\Filter\Boundaries\Boundaries2d\constant2d.hpp" />
+    <ClInclude Include="includes\NumCpp\Filter\Boundaries\Boundaries2d\fillCorners.hpp" />
+    <ClInclude Include="includes\NumCpp\Filter\Boundaries\Boundaries2d\mirror2d.hpp" />
+    <ClInclude Include="includes\NumCpp\Filter\Boundaries\Boundaries2d\nearest2d.hpp" />
+    <ClInclude Include="includes\NumCpp\Filter\Boundaries\Boundaries2d\reflect2d.hpp" />
+    <ClInclude Include="includes\NumCpp\Filter\Boundaries\Boundaries2d\trimBoundary2d.hpp" />
+    <ClInclude Include="includes\NumCpp\Filter\Boundaries\Boundaries2d\wrap2d.hpp" />
+    <ClInclude Include="includes\NumCpp\Filter\Boundaries\Boundary.hpp" />
+    <ClInclude Include="includes\NumCpp\Filter\Filters\Filters1d\complementaryMedianFilter1d.hpp" />
+    <ClInclude Include="includes\NumCpp\Filter\Filters\Filters1d\convolve1d.hpp" />
+    <ClInclude Include="includes\NumCpp\Filter\Filters\Filters1d\gaussianFilter1d.hpp" />
+    <ClInclude Include="includes\NumCpp\Filter\Filters\Filters1d\maximumFilter1d.hpp" />
+    <ClInclude Include="includes\NumCpp\Filter\Filters\Filters1d\medianFilter1d.hpp" />
+    <ClInclude Include="includes\NumCpp\Filter\Filters\Filters1d\minimumFilter1d.hpp" />
+    <ClInclude Include="includes\NumCpp\Filter\Filters\Filters1d\percentileFilter1d.hpp" />
+    <ClInclude Include="includes\NumCpp\Filter\Filters\Filters1d\rankFilter1d.hpp" />
+    <ClInclude Include="includes\NumCpp\Filter\Filters\Filters1d\uniformFilter1d.hpp" />
+    <ClInclude Include="includes\NumCpp\Filter\Filters\Filters2d\complementaryMedianFilter.hpp" />
+    <ClInclude Include="includes\NumCpp\Filter\Filters\Filters2d\convolve.hpp" />
+    <ClInclude Include="includes\NumCpp\Filter\Filters\Filters2d\gaussianFilter.hpp" />
+    <ClInclude Include="includes\NumCpp\Filter\Filters\Filters2d\laplace.hpp" />
+    <ClInclude Include="includes\NumCpp\Filter\Filters\Filters2d\maximumFilter.hpp" />
+    <ClInclude Include="includes\NumCpp\Filter\Filters\Filters2d\medianFilter.hpp" />
+    <ClInclude Include="includes\NumCpp\Filter\Filters\Filters2d\minimumFilter.hpp" />
+    <ClInclude Include="includes\NumCpp\Filter\Filters\Filters2d\percentileFilter.hpp" />
+    <ClInclude Include="includes\NumCpp\Filter\Filters\Filters2d\rankFilter.hpp" />
+    <ClInclude Include="includes\NumCpp\Filter\Filters\Filters2d\uniformFilter.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\abs.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\add.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\alen.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\all.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\allclose.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\amax.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\amin.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\angle.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\any.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\append.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\applyFunction.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\applyPoly1d.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\arange.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\arccos.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\arccosh.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\arcsin.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\arcsinh.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\arctan.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\arctan2.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\arctanh.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\argmax.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\argmin.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\argsort.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\argwhere.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\around.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\array_equal.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\array_equiv.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\asarray.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\astype.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\average.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\bartlett.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\binaryRepr.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\bincount.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\bitwise_and.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\bitwise_not.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\bitwise_or.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\bitwise_xor.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\bit_count.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\blackman.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\byteswap.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\cbrt.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\ceil.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\centerOfMass.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\clip.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\column_stack.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\complex.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\concatenate.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\conj.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\contains.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\copy.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\copySign.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\copyto.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\corrcoef.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\cos.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\cosh.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\count_nonzero.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\cov.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\cov_inv.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\cross.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\cube.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\cumprod.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\cumsum.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\deg2rad.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\degrees.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\deleteIndices.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\diag.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\diagflat.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\diagonal.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\diff.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\divide.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\dot.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\dump.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\empty.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\empty_like.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\endianess.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\equal.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\exp.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\exp2.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\expm1.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\extract.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\eye.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\fillDiagnol.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\find.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\fix.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\flatnonzero.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\flatten.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\flip.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\fliplr.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\flipud.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\floor.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\floor_divide.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\fmax.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\fmin.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\fmod.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\frombuffer.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\fromfile.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\fromiter.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\full.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\full_like.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\gcd.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\geomspace.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\gradient.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\greater.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\greater_equal.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\hamming.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\hammingEncode.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\hanning.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\histogram.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\hstack.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\hypot.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\identity.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\imag.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\inner.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\interp.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\intersect1d.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\invert.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\isclose.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\isinf.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\isnan.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\isneginf.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\isposinf.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\kaiser.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\lcm.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\ldexp.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\left_shift.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\less.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\less_equal.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\linspace.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\load.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\log.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\log10.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\log1p.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\log2.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\logb.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\logical_and.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\logical_not.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\logical_or.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\logical_xor.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\logspace.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\matmul.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\max.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\maximum.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\mean.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\median.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\meshgrid.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\min.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\minimum.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\mod.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\multiply.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\nanargmax.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\nanargmin.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\nancumprod.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\nancumsum.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\nanmax.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\nanmean.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\nanmedian.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\nanmin.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\nanpercentile.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\nanprod.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\nans.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\nanstdev.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\nansum.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\nans_like.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\nanvar.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\nan_to_num.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\nbytes.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\negative.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\newbyteorder.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\none.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\nonzero.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\norm.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\not_equal.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\nth_root.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\ones.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\ones_like.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\outer.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\pad.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\partition.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\percentile.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\place.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\polar.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\power.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\powerf.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\print.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\prod.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\proj.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\ptp.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\put.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\putmask.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\rad2deg.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\radians.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\ravel.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\real.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\reciprocal.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\remainder.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\repeat.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\replace.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\reshape.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\resizeFast.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\resizeSlow.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\right_shift.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\rint.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\rms.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\roll.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\rot90.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\round.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\row_stack.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\select.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\setdiff1d.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\shape.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\sign.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\signbit.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\sin.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\sinc.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\sinh.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\size.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\sort.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\sqrt.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\square.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\stack.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\stdev.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\subtract.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\sum.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\swap.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\swapaxes.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\swapCols.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\swapRows.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\take.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\tan.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\tanh.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\tile.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\tofile.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\toStlVector.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\trace.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\transpose.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\trapz.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\tri.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\trim_zeros.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\trunc.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\union1d.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\unique.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\unwrap.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\var.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\vstack.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\where.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\zeros.hpp" />
+    <ClInclude Include="includes\NumCpp\Functions\zeros_like.hpp" />
+    <ClInclude Include="includes\NumCpp\ImageProcessing.hpp" />
+    <ClInclude Include="includes\NumCpp\ImageProcessing\applyThreshold.hpp" />
+    <ClInclude Include="includes\NumCpp\ImageProcessing\Centroid.hpp" />
+    <ClInclude Include="includes\NumCpp\ImageProcessing\centroidClusters.hpp" />
+    <ClInclude Include="includes\NumCpp\ImageProcessing\Cluster.hpp" />
+    <ClInclude Include="includes\NumCpp\ImageProcessing\ClusterMaker.hpp" />
+    <ClInclude Include="includes\NumCpp\ImageProcessing\clusterPixels.hpp" />
+    <ClInclude Include="includes\NumCpp\ImageProcessing\generateCentroids.hpp" />
+    <ClInclude Include="includes\NumCpp\ImageProcessing\generateThreshold.hpp" />
+    <ClInclude Include="includes\NumCpp\ImageProcessing\Pixel.hpp" />
+    <ClInclude Include="includes\NumCpp\ImageProcessing\windowExceedances.hpp" />
+    <ClInclude Include="includes\NumCpp\Integrate.hpp" />
+    <ClInclude Include="includes\NumCpp\Integrate\gauss_legendre.hpp" />
+    <ClInclude Include="includes\NumCpp\Integrate\romberg.hpp" />
+    <ClInclude Include="includes\NumCpp\Integrate\simpson.hpp" />
+    <ClInclude Include="includes\NumCpp\Integrate\trapazoidal.hpp" />
+    <ClInclude Include="includes\NumCpp\Linalg.hpp" />
+    <ClInclude Include="includes\NumCpp\Linalg\cholesky.hpp" />
+    <ClInclude Include="includes\NumCpp\Linalg\det.hpp" />
+    <ClInclude Include="includes\NumCpp\Linalg\gaussNewtonNlls.hpp" />
+    <ClInclude Include="includes\NumCpp\Linalg\hat.hpp" />
+    <ClInclude Include="includes\NumCpp\Linalg\inv.hpp" />
+    <ClInclude Include="includes\NumCpp\Linalg\lstsq.hpp" />
+    <ClInclude Include="includes\NumCpp\Linalg\lu_decomposition.hpp" />
+    <ClInclude Include="includes\NumCpp\Linalg\matrix_power.hpp" />
+    <ClInclude Include="includes\NumCpp\Linalg\multi_dot.hpp" />
+    <ClInclude Include="includes\NumCpp\Linalg\pinv.hpp" />
+    <ClInclude Include="includes\NumCpp\Linalg\pivotLU_decomposition.hpp" />
+    <ClInclude Include="includes\NumCpp\Linalg\solve.hpp" />
+    <ClInclude Include="includes\NumCpp\Linalg\svd.hpp" />
+    <ClInclude Include="includes\NumCpp\Linalg\svd\SVDClass.hpp" />
+    <ClInclude Include="includes\NumCpp\NdArray.hpp" />
+    <ClInclude Include="includes\NumCpp\NdArray\NdArrayCore.hpp" />
+    <ClInclude Include="includes\NumCpp\NdArray\NdArrayIterators.hpp" />
+    <ClInclude Include="includes\NumCpp\NdArray\NdArrayOperators.hpp" />
+    <ClInclude Include="includes\NumCpp\Polynomial.hpp" />
+    <ClInclude Include="includes\NumCpp\Polynomial\chebyshev_t.hpp" />
+    <ClInclude Include="includes\NumCpp\Polynomial\chebyshev_u.hpp" />
+    <ClInclude Include="includes\NumCpp\Polynomial\hermite.hpp" />
+    <ClInclude Include="includes\NumCpp\Polynomial\laguerre.hpp" />
+    <ClInclude Include="includes\NumCpp\Polynomial\legendre_p.hpp" />
+    <ClInclude Include="includes\NumCpp\Polynomial\legendre_q.hpp" />
+    <ClInclude Include="includes\NumCpp\Polynomial\Poly1d.hpp" />
+    <ClInclude Include="includes\NumCpp\Polynomial\spherical_harmonic.hpp" />
+    <ClInclude Include="includes\NumCpp\PythonInterface.hpp" />
+    <ClInclude Include="includes\NumCpp\PythonInterface\BoostInterface.hpp" />
+    <ClInclude Include="includes\NumCpp\PythonInterface\BoostNumpyNdarrayHelper.hpp" />
+    <ClInclude Include="includes\NumCpp\PythonInterface\PybindInterface.hpp" />
+    <ClInclude Include="includes\NumCpp\Random.hpp" />
+    <ClInclude Include="includes\NumCpp\Random\bernoulli.hpp" />
+    <ClInclude Include="includes\NumCpp\Random\beta.hpp" />
+    <ClInclude Include="includes\NumCpp\Random\binomial.hpp" />
+    <ClInclude Include="includes\NumCpp\Random\cauchy.hpp" />
+    <ClInclude Include="includes\NumCpp\Random\chiSquare.hpp" />
+    <ClInclude Include="includes\NumCpp\Random\choice.hpp" />
+    <ClInclude Include="includes\NumCpp\Random\discrete.hpp" />
+    <ClInclude Include="includes\NumCpp\Random\exponential.hpp" />
+    <ClInclude Include="includes\NumCpp\Random\extremeValue.hpp" />
+    <ClInclude Include="includes\NumCpp\Random\f.hpp" />
+    <ClInclude Include="includes\NumCpp\Random\gamma.hpp" />
+    <ClInclude Include="includes\NumCpp\Random\generator.hpp" />
+    <ClInclude Include="includes\NumCpp\Random\geometric.hpp" />
+    <ClInclude Include="includes\NumCpp\Random\laplace.hpp" />
+    <ClInclude Include="includes\NumCpp\Random\lognormal.hpp" />
+    <ClInclude Include="includes\NumCpp\Random\negativeBinomial.hpp" />
+    <ClInclude Include="includes\NumCpp\Random\nonCentralChiSquared.hpp" />
+    <ClInclude Include="includes\NumCpp\Random\normal.hpp" />
+    <ClInclude Include="includes\NumCpp\Random\permutation.hpp" />
+    <ClInclude Include="includes\NumCpp\Random\poisson.hpp" />
+    <ClInclude Include="includes\NumCpp\Random\rand.hpp" />
+    <ClInclude Include="includes\NumCpp\Random\randFloat.hpp" />
+    <ClInclude Include="includes\NumCpp\Random\randInt.hpp" />
+    <ClInclude Include="includes\NumCpp\Random\randN.hpp" />
+    <ClInclude Include="includes\NumCpp\Random\RNG.hpp" />
+    <ClInclude Include="includes\NumCpp\Random\shuffle.hpp" />
+    <ClInclude Include="includes\NumCpp\Random\standardNormal.hpp" />
+    <ClInclude Include="includes\NumCpp\Random\studentT.hpp" />
+    <ClInclude Include="includes\NumCpp\Random\triangle.hpp" />
+    <ClInclude Include="includes\NumCpp\Random\uniform.hpp" />
+    <ClInclude Include="includes\NumCpp\Random\uniformOnSphere.hpp" />
+    <ClInclude Include="includes\NumCpp\Random\weibull.hpp" />
+    <ClInclude Include="includes\NumCpp\Roots.hpp" />
+    <ClInclude Include="includes\NumCpp\Roots\Bisection.hpp" />
+    <ClInclude Include="includes\NumCpp\Roots\Brent.hpp" />
+    <ClInclude Include="includes\NumCpp\Roots\Dekker.hpp" />
+    <ClInclude Include="includes\NumCpp\Roots\Iteration.hpp" />
+    <ClInclude Include="includes\NumCpp\Roots\Newton.hpp" />
+    <ClInclude Include="includes\NumCpp\Roots\Secant.hpp" />
+    <ClInclude Include="includes\NumCpp\Rotations.hpp" />
+    <ClInclude Include="includes\NumCpp\Rotations\DCM.hpp" />
+    <ClInclude Include="includes\NumCpp\Rotations\Quaternion.hpp" />
+    <ClInclude Include="includes\NumCpp\Rotations\rodriguesRotation.hpp" />
+    <ClInclude Include="includes\NumCpp\Rotations\wahbasProblem.hpp" />
+    <ClInclude Include="includes\NumCpp\Special.hpp" />
+    <ClInclude Include="includes\NumCpp\Special\airy_ai.hpp" />
+    <ClInclude Include="includes\NumCpp\Special\airy_ai_prime.hpp" />
+    <ClInclude Include="includes\NumCpp\Special\airy_bi.hpp" />
+    <ClInclude Include="includes\NumCpp\Special\airy_bi_prime.hpp" />
+    <ClInclude Include="includes\NumCpp\Special\bernoulli.hpp" />
+    <ClInclude Include="includes\NumCpp\Special\bessel_in.hpp" />
+    <ClInclude Include="includes\NumCpp\Special\bessel_in_prime.hpp" />
+    <ClInclude Include="includes\NumCpp\Special\bessel_jn.hpp" />
+    <ClInclude Include="includes\NumCpp\Special\bessel_jn_prime.hpp" />
+    <ClInclude Include="includes\NumCpp\Special\bessel_kn.hpp" />
+    <ClInclude Include="includes\NumCpp\Special\bessel_kn_prime.hpp" />
+    <ClInclude Include="includes\NumCpp\Special\bessel_yn.hpp" />
+    <ClInclude Include="includes\NumCpp\Special\bessel_yn_prime.hpp" />
+    <ClInclude Include="includes\NumCpp\Special\beta.hpp" />
+    <ClInclude Include="includes\NumCpp\Special\cnr.hpp" />
+    <ClInclude Include="includes\NumCpp\Special\comp_ellint_1.hpp" />
+    <ClInclude Include="includes\NumCpp\Special\comp_ellint_2.hpp" />
+    <ClInclude Include="includes\NumCpp\Special\comp_ellint_3.hpp" />
+    <ClInclude Include="includes\NumCpp\Special\cyclic_hankel_1.hpp" />
+    <ClInclude Include="includes\NumCpp\Special\cyclic_hankel_2.hpp" />
+    <ClInclude Include="includes\NumCpp\Special\digamma.hpp" />
+    <ClInclude Include="includes\NumCpp\Special\ellint_1.hpp" />
+    <ClInclude Include="includes\NumCpp\Special\ellint_2.hpp" />
+    <ClInclude Include="includes\NumCpp\Special\ellint_3.hpp" />
+    <ClInclude Include="includes\NumCpp\Special\erf.hpp" />
+    <ClInclude Include="includes\NumCpp\Special\erfc.hpp" />
+    <ClInclude Include="includes\NumCpp\Special\erfc_inv.hpp" />
+    <ClInclude Include="includes\NumCpp\Special\erf_inv.hpp" />
+    <ClInclude Include="includes\NumCpp\Special\expint.hpp" />
+    <ClInclude Include="includes\NumCpp\Special\factorial.hpp" />
+    <ClInclude Include="includes\NumCpp\Special\gamma.hpp" />
+    <ClInclude Include="includes\NumCpp\Special\gamma1pm1.hpp" />
+    <ClInclude Include="includes\NumCpp\Special\log_gamma.hpp" />
+    <ClInclude Include="includes\NumCpp\Special\pnr.hpp" />
+    <ClInclude Include="includes\NumCpp\Special\polygamma.hpp" />
+    <ClInclude Include="includes\NumCpp\Special\prime.hpp" />
+    <ClInclude Include="includes\NumCpp\Special\riemann_zeta.hpp" />
+    <ClInclude Include="includes\NumCpp\Special\softmax.hpp" />
+    <ClInclude Include="includes\NumCpp\Special\spherical_bessel_jn.hpp" />
+    <ClInclude Include="includes\NumCpp\Special\spherical_bessel_yn.hpp" />
+    <ClInclude Include="includes\NumCpp\Special\spherical_hankel_1.hpp" />
+    <ClInclude Include="includes\NumCpp\Special\spherical_hankel_2.hpp" />
+    <ClInclude Include="includes\NumCpp\Special\trigamma.hpp" />
+    <ClInclude Include="includes\NumCpp\Utils.hpp" />
+    <ClInclude Include="includes\NumCpp\Utils\cube.hpp" />
+    <ClInclude Include="includes\NumCpp\Utils\essentiallyEqual.hpp" />
+    <ClInclude Include="includes\NumCpp\Utils\gaussian.hpp" />
+    <ClInclude Include="includes\NumCpp\Utils\gaussian1d.hpp" />
+    <ClInclude Include="includes\NumCpp\Utils\interp.hpp" />
+    <ClInclude Include="includes\NumCpp\Utils\num2str.hpp" />
+    <ClInclude Include="includes\NumCpp\Utils\power.hpp" />
+    <ClInclude Include="includes\NumCpp\Utils\powerf.hpp" />
+    <ClInclude Include="includes\NumCpp\Utils\sqr.hpp" />
+    <ClInclude Include="includes\NumCpp\Utils\value2str.hpp" />
+    <ClInclude Include="includes\NumCpp\Vector.hpp" />
+    <ClInclude Include="includes\NumCpp\Vector\Vec2.hpp" />
+    <ClInclude Include="includes\NumCpp\Vector\Vec3.hpp" />
+    <ClInclude Include="src\mesh_generator.hpp" />
+    <ClInclude Include="src\panel.hpp" />
+    <ClInclude Include="src\pch.h" />
+    <ClInclude Include="src\plane.hpp" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{f98908c4-f6db-4cbd-b409-1ce9ae2a1c12}</ProjectGuid>
+    <RootNamespace>VLM</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
