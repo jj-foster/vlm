@@ -1,9 +1,5 @@
 #pragma once
 
-//#include <NumCpp/NdArray.hpp>
-//#include <vector>
-//#include <array>
-
 #include <pch.h>
 
 #include <mesh_generator.hpp>
@@ -11,7 +7,6 @@
 class Mesh;
 class Wing;
 class Section;
-class Plane;
 
 class Plane {
 

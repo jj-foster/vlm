@@ -1,10 +1,3 @@
-//#include <iostream>
-//
-//#include <NumCpp/NdArray.hpp>
-//#include <NumCpp/Functions/norm.hpp>
-//#include <NumCpp/Functions/cross.hpp>
-//#include <NumCpp/Functions/zeros.hpp>
-
 #include <pch.h>
 
 #include <panel.hpp>

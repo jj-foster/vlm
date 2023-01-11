@@ -81,6 +81,8 @@ void Mesh::calc_panels(Wing* wing) {
 
 void Mesh::append(std::shared_ptr<Mesh> mesh1)
 {   
+    if (!mesh1) return;
+
     const nc::NdArray<double> points1{ mesh1->getPoints() };
     const std::vector<Panel> panels1{ mesh1->getPanels() };
 

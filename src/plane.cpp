@@ -1,13 +1,7 @@
-//#include <nlohmann/json.hpp>
-//#include <NumCpp/NdArray.hpp>
-//
-//#include <fstream>
-//#include <vector>
-//#include <array>
-
 #include <pch.h>
 
 #include <plane.hpp>
+#include <mesh_generator.hpp>
 
 using json = nlohmann::json;
 
@@ -96,17 +90,15 @@ void Plane::read_json(std::ifstream& file) {
     }
 }
 
-void Plane::appendMesh()
-{   
-    for (int i{ 0 }; i<n_wings; i++) {
+void Plane::appendMesh() 
+{
+    wings[0]->generateMesh();
+    plane_mesh = *wings[0]->getMesh();
+
+    for (int i{ 1 }; i<n_wings; i++) {
         wings[i]->generateMesh();
 
-        if (i == 0) {
-            plane_mesh = *wings[i]->getMesh();
-        }
-        else {
-            plane_mesh.append(wings[i]->getMesh());
-        }
+        plane_mesh.append(wings[i]->getMesh());
     }
 }
 

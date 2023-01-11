@@ -16,7 +16,7 @@ private:
     void calc_panels(Wing* wing);
 
 public:
-    Mesh() {};
+    Mesh() = default;
 
     void generate(Wing* wing);
     void append(std::shared_ptr<Mesh> mesh1);

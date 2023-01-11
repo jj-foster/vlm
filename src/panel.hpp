@@ -1,7 +1,5 @@
 #pragma once
 
-//#include <NumCpp/NdArray.hpp>
-
 #include <pch.h>
 
 class Panel {
