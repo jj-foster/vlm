@@ -2,9 +2,10 @@
 
 #include <pch.h>
 
-#include <mesh_generator.hpp>
+#include <mesh.hpp>
 
 class Mesh;
+class MultiMesh;
 class Wing;
 class Section;
 
@@ -19,12 +20,13 @@ public:
     double b_ref;
     double c_ref;
 
+    MultiMesh* mesh;
+
     std::vector<std::unique_ptr<Wing>> wings{};
     int n_wings{ 0 };
 
     Plane(std::ifstream& file);
 
-    void drawMesh();
 };
 
 class Wing {
@@ -40,7 +42,7 @@ public:
 
     void generateMesh();
 
-    const std::shared_ptr<Mesh> &getMesh() const
+    std::shared_ptr<Mesh> &getMesh()
     {
         return mesh_;
     }

@@ -1,6 +1,6 @@
 #include <pch.h>
 
-#include <mesh_generator.hpp>
+#include <mesh.hpp>
 #include <panel.hpp>
 
 void Mesh::generate(Wing* wing)
@@ -60,6 +60,8 @@ void Mesh::calc_points(Wing* wing) {
 /// 
 /// </summary>
 void Mesh::calc_panels(Wing* wing) {
+    int panel_count{ 0 };
+
     for (int i{ 0 }; i < (wing->n); i++)
     {
         for (int j{ 0 }; j < (wing->m_sum); j++)
@@ -71,43 +73,17 @@ void Mesh::calc_panels(Wing* wing) {
             auto P3 = points(n + wing->m_sum + 2, points.cSlice());
             auto P4 = points(n + wing->m_sum + 1, points.cSlice());
 
-            Panel panel(P1, P2, P3, P4);
+            Panel panel(P1, P2, P3, P4, panel_count);
 
             panels.push_back(panel);
+
+            panel_count++;
         }
     }
 
 }
 
-/// <summary>
-/// Constructor. Assigns the startig and end panels.
-/// </summary>
-/// <param name="meshes">Mesh container.</param>
-MeshIterator::MeshIterator(std::vector<std::shared_ptr<Mesh>> meshes)
-    : meshes{ meshes }
-    , currentMesh{ meshes.begin() }
-    , endMesh{ meshes.end() }
+void MultiMesh::draw()
 {
-    currentPanel = currentMesh->get()->getPanels().begin();
-    endPanel = currentMesh->get()->getPanels().end();
-}
 
-/// <summary>
-/// ++ operator overload. Advances the iterator to the next Panel object.
-/// </summary>
-/// <returns></returns>
-MeshIterator& MeshIterator::operator++()
-{
-    currentPanel++;
-
-    if (currentPanel == endPanel)
-    {
-        currentMesh++;
-        
-        if (currentMesh != endMesh) {
-            currentPanel = currentMesh->get()->getPanels().begin();
-            endPanel = currentMesh->get()->getPanels().end();
-        }
-    }
-    return *this;
 }

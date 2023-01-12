@@ -1,13 +1,28 @@
 #include <pch.h>
 
 #include <plane.hpp>
-#include <mesh_generator.hpp>
+#include <mesh.hpp>
 
 using json = nlohmann::json;
 
 Plane::Plane(std::ifstream& f) {
 
     read_json(f);
+
+    // generate wing meshes.
+    for (auto& wing : wings) {
+        wing->generateMesh();
+    }
+
+    // populate wing mesh container.
+    std::vector<std::shared_ptr<Mesh>> wing_meshes;
+    for (auto& wing : wings) {
+        std::shared_ptr<Mesh> mesh = wing->getMesh();
+        wing_meshes.push_back(mesh);
+    }
+
+    // plane mesh container.
+    mesh = new MultiMesh { wing_meshes };
 }
 
 void Wing::generateMesh()
@@ -87,9 +102,4 @@ void Plane::read_json(std::ifstream& file) {
         n_wings++;
 
     }
-}
-
-void Plane::drawMesh()
-{
-
 }

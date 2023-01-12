@@ -6,12 +6,14 @@ Panel::Panel(
     nc::NdArray<double> P1,
     nc::NdArray<double> P2,
     nc::NdArray<double> P3,
-    nc::NdArray<double> P4
+    nc::NdArray<double> P4,
+    int id
 )
     : P1(P1),
     P2(P2),
     P3(P3),
-    P4(P4)
+    P4(P4),
+    id(id)
 {
     calc_area();
     calc_cp();
@@ -76,16 +78,17 @@ void Panel::calc_normal() {
 
 }
 
-// int main() {
-//     nc::NdArray<double> A {1,2,3};
-//     nc::NdArray<double> B {3,4,5};
-//     nc::NdArray<double> C {6,7,8};
-//     nc::NdArray<double> D {9,10,11};
+void Panel::print()
+{   
+    std::cout << "PANEL " << id << '\n';
+    std::cout << '\t' << "Corners: " << '\n';
+    std::cout << '\t' << P1;
+    std::cout << '\t' << P2;
+    std::cout << '\t' << P3;
+    std::cout << '\t' << P4 << '\n';
 
-//     Panel panel1 {A,B,C,D};
-
-//     auto x = nc::zeros<int>(3);
-//     x.print();
-
-//     return 0;
-// }
+    std::cout << '\t' << "Area: " << S << '\n';
+    std::cout << '\t' << "Co-location point: " << cp;
+    std::cout << '\t' << "dy: " << dy << '\n';
+    std::cout << '\t' << "Normal: " << n << '\n';
+}

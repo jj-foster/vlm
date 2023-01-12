@@ -9,6 +9,8 @@ private:
     nc::NdArray<double> P3;
     nc::NdArray<double> P4;
 
+    int id;
+
 public:
     double S;
     nc::NdArray<double> cp;
@@ -26,12 +28,15 @@ public:
         nc::NdArray<double> P1,
         nc::NdArray<double> P2,
         nc::NdArray<double> P3,
-        nc::NdArray<double> P4
+        nc::NdArray<double> P4,
+        int id
     );
 
     void calc_area();
     void calc_cp();
     void calc_bound_vortex();
     void calc_normal();
+
+    void print();
 
 };
