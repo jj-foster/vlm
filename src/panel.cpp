@@ -91,4 +91,10 @@ void Panel::print()
     std::cout << '\t' << "Co-location point: " << cp;
     std::cout << '\t' << "dy: " << dy << '\n';
     std::cout << '\t' << "Normal: " << n << '\n';
+
+    if (gamma != 0) { std::cout << '\t' << "gamma: " << gamma << '\n'; }
+    if (dL != 0) { std::cout << '\t' << "dL: " << dL << '\n'; }
+    if (w_ind != 0) { std::cout << '\t' << "w_ind: " << w_ind << '\n'; }
+    if (dD != 0) { std::cout << '\t' << "dD: " << dD << '\n'; }
+
 }
