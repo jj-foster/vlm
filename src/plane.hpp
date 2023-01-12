@@ -11,10 +11,7 @@ class Section;
 class Plane {
 
 private:
-    Mesh plane_mesh;
-
     void read_json(std::ifstream& file);
-    void appendMesh();
 
 public:
 

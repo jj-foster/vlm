@@ -8,7 +8,6 @@ using json = nlohmann::json;
 Plane::Plane(std::ifstream& f) {
 
     read_json(f);
-    appendMesh();
 }
 
 void Wing::generateMesh()
@@ -87,18 +86,6 @@ void Plane::read_json(std::ifstream& file) {
         wings.push_back(std::move(wing_ptr));
         n_wings++;
 
-    }
-}
-
-void Plane::appendMesh() 
-{
-    wings[0]->generateMesh();
-    plane_mesh = *wings[0]->getMesh();
-
-    for (int i{ 1 }; i<n_wings; i++) {
-        wings[i]->generateMesh();
-
-        plane_mesh.append(wings[i]->getMesh());
     }
 }
 

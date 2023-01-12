@@ -79,13 +79,35 @@ void Mesh::calc_panels(Wing* wing) {
 
 }
 
-void Mesh::append(std::shared_ptr<Mesh> mesh1)
-{   
-    if (!mesh1) return;
+/// <summary>
+/// Constructor. Assigns the startig and end panels.
+/// </summary>
+/// <param name="meshes">Mesh container.</param>
+MeshIterator::MeshIterator(std::vector<std::shared_ptr<Mesh>> meshes)
+    : meshes{ meshes }
+    , currentMesh{ meshes.begin() }
+    , endMesh{ meshes.end() }
+{
+    currentPanel = currentMesh->get()->getPanels().begin();
+    endPanel = currentMesh->get()->getPanels().end();
+}
 
-    const nc::NdArray<double> points1{ mesh1->getPoints() };
-    const std::vector<Panel> panels1{ mesh1->getPanels() };
+/// <summary>
+/// ++ operator overload. Advances the iterator to the next Panel object.
+/// </summary>
+/// <returns></returns>
+MeshIterator& MeshIterator::operator++()
+{
+    currentPanel++;
 
-    points = nc::append(points, points1);
-    panels.insert(panels.end(), panels1.begin(), panels1.end());
+    if (currentPanel == endPanel)
+    {
+        currentMesh++;
+        
+        if (currentMesh != endMesh) {
+            currentPanel = currentMesh->get()->getPanels().begin();
+            endPanel = currentMesh->get()->getPanels().end();
+        }
+    }
+    return *this;
 }
