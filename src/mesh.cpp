@@ -37,11 +37,11 @@ void Mesh::calc_points(Wing* wing) {
             nc::NdArray<double> P1_inc_vec{
                 P1_increment * nc::cos(nc::deg2rad(section_prev.incident)),
                 0,
-                -P1_increment* nc::sin(nc::deg2rad(section_curr.incident))
+                -P1_increment* nc::sin(nc::deg2rad(section_prev.incident))
             };
 
             nc::NdArray<double> P2_inc_vec{
-                P2_increment * nc::cos(nc::deg2rad(section_prev.incident)),
+                P2_increment * nc::cos(nc::deg2rad(section_curr.incident)),
                 0,
                 -P2_increment * nc::sin(nc::deg2rad(section_curr.incident))
             };
