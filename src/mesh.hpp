@@ -23,8 +23,10 @@ public:
 
     void generate(Wing* wing);
 
-    //nc::NdArray<double> const getPoints() const {return points;}
     nc::NdArray<double> const &getPoints() const { return points; }
+
+    // getPanels cannot be constant because the panel needs to be updated
+    // when vlm is running.
     std::vector<Panel> &getPanels() { return panels; }
 
 };
@@ -34,10 +36,10 @@ private:
     std::vector<std::shared_ptr<Mesh>> meshes;
 
 public:
-
-    MultiMesh() {};
+    // Constructor.
     MultiMesh(std::vector<std::shared_ptr<Mesh>> meshes) : meshes{ meshes } {}
 
+    // [] overload. Allows easy access for each mesh in multimesh container.
     Mesh* operator[](int index) {
         return meshes[index].get();
     }
@@ -49,35 +51,39 @@ public:
     {
     private:
         std::vector<std::shared_ptr<Mesh>> meshes;
-        std::vector<std::shared_ptr<Mesh>>::iterator currentMesh;
-        std::vector<std::shared_ptr<Mesh>>::iterator endMesh;
-
-        std::vector<Panel>::iterator currentPanel;
-        std::vector<Panel>::iterator endPanel;
+        // Using indices because mesh iterators would go out of scope when
+        // temp objects are created and copied by the range-based for loop.
+        size_t currentMeshIndex, endMeshIndex;
+        std::vector<Panel>::iterator currentPanel, endPanel;
 
     public:
         // Constructor. Assigns current and end panels and meshes.
         PanelIterator(std::vector<std::shared_ptr<Mesh>> meshes)
             : meshes{ meshes }
-            , currentMesh{ meshes.begin() }
-            , endMesh{ meshes.end() - 1 }
+            , currentMeshIndex{ 0 }
+            , endMeshIndex{ meshes.size() }
         {
-            currentPanel = currentMesh->get()->getPanels().begin();
-            endPanel = endMesh->get()->getPanels().end() - 1;
+            currentPanel = meshes[0]->getPanels().begin();
+            endPanel = meshes[0]->getPanels().end();
         }
 
         // ++ overload. Increments over each mesh then each panel.
         PanelIterator& operator++()
         {
-            currentPanel++;
-
+            // If all panels in the current mesh have been iterated through,
+            // increment the mesh.
             if (currentPanel == endPanel)
             {
-                currentMesh++;
-                if (currentMesh != endMesh) {
-                    currentPanel = currentMesh->get()->getPanels().begin();
-                    endPanel = endMesh->get()->getPanels().end() -1;
+                currentMeshIndex++;
+                // Redefine panels using next mesh.
+                if (currentMeshIndex != endMeshIndex) {
+                    currentPanel = meshes[currentMeshIndex]->getPanels().begin();
+                    endPanel = meshes[currentMeshIndex]->getPanels().end();
                 }
+            }
+            else
+            {
+                currentPanel++;
             }
 
             return *this;
@@ -90,20 +96,20 @@ public:
 
         // != overload. For use in for loops.
         bool operator!=(const PanelIterator& other) {
-            return currentMesh->get() != other.endMesh->get() || currentPanel != other.endPanel;
+            return !(*this == other);
         }
 
-        // != overload. Also for use in for loops.
+        // == overload. Also for use in for loops.
         bool operator==(const PanelIterator& other) {
-            return currentMesh->get() == other.endMesh->get() && currentPanel == other.endPanel;
+            return currentMeshIndex == other.currentMeshIndex &&
+                currentPanel == other.currentPanel;
         }
 
         // Set the current mesh and panel to their respective iterator ends.
         // Used for end() function for range-based for loops.
         void setEnd() {
-            endMesh = meshes.end() - 1;
-            currentMesh = endMesh;
-            currentPanel = currentMesh->get()->getPanels().end() -1 ;
+            currentMeshIndex = endMeshIndex - 1;
+            currentPanel = meshes[currentMeshIndex]->getPanels().end();
         }
     };
 

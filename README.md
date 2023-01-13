@@ -2,7 +2,6 @@
 
 ### TODO:
 
-- panel iterator
 - section incidence meshing
 - camber meshing
 	- aerofoil .dat read
