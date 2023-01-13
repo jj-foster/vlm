@@ -2,7 +2,6 @@
 
 ### TODO:
 
-- section incidence meshing
 - camber meshing
 	- aerofoil .dat read
 	- chord scaling

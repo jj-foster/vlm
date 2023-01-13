@@ -12,5 +12,8 @@
 #include <NumCpp/Functions/cross.hpp>
 #include <NumCpp/Functions/append.hpp>
 #include <NumCpp/Functions/vstack.hpp>
+#include <NumCpp/Functions/sin.hpp>
+#include <NumCpp/Functions/cos.hpp>
+#include <NumCpp/Functions/deg2rad.hpp>
 
 #include <nlohmann/json.hpp>

@@ -17,21 +17,45 @@ void Mesh::calc_points(Wing* wing) {
     points = nc::zeros<double>(N, 3);
 
     int point_count{ 0 };
+
+    // Loop through chordwise splits
     for (int i{ 0 }; i <= (wing->n); i++) {
         int s(0);
+
+        // Loop through sections i.e. where chord, leading edge coordinates 
+        // and # spanwise splits change.
         for (Section& section : wing->sections) {
 
-            auto dx_P1 = (double)i * section.chords(0, 0) / wing->n;
-            auto dx_P2 = (double)i * section.chords(0, 1) / wing->n;
+            // x increment 
+            auto P1_increment = (double)i * section.chords(0, 0) / wing->n;
+            auto P2_increment = (double)i * section.chords(0, 1) / wing->n;
 
-            auto P1 = section.leading_edges.at(0) + nc::NdArray<double> {dx_P1, 0, 0};
-            auto P2 = section.leading_edges.at(1) + nc::NdArray<double> {dx_P2, 0, 0};
+            nc::NdArray<double> P1_inc_vec{
+                P1_increment * nc::cos(nc::deg2rad(section.incidents[0])),
+                0,
+                -P1_increment* nc::sin(nc::deg2rad(section.incidents[1]))
+            };
+
+            nc::NdArray<double> P2_inc_vec{
+                P2_increment * nc::cos(nc::deg2rad(section.incidents[0])),
+                0,
+                -P2_increment * nc::sin(nc::deg2rad(section.incidents[1]))
+            };
+
+            // Vector between leading edge locations.
+            // Shifts start and end coordiantes of spanwise split down chord.
+            auto P1 = section.leading_edges[0] + P1_inc_vec;
+            auto P2 = section.leading_edges[1] + P2_inc_vec;
             auto P1P2 = P2 - P1;
 
+            // ... spanwise points.
             for (int j{ 0 }; j < (section.m + 1); j++) {
+
+                // Skips double generating points at connection between sections.
                 if (j == 0 && s != 0) {
                     continue;
                 }
+
                 else {
                     double t = (double)j / section.m;
                     auto x = P1P2 * t + P1;

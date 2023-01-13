@@ -5,13 +5,13 @@
         "c_ref":0.1,
         "wing":[
             {
-                "n":2,
+                "n":1,
                 "section":[
                     {
-                        "m":2,
+                        "m":1,
                         "leading_edges":[[0,0,0],[0,1,0]],
-                        "chords":[0.1,0.1],
-			"i_angle":[0,0]
+                        "chords":[1,1],
+			                  "i_angle":[45,45]
                     }
                 ]
             }
