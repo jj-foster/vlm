@@ -38,12 +38,9 @@ void Section::print() {
     std::cout << "m: " << m << '\n';
 
     std::cout << "leading edges: ";
-    for (auto& le : leading_edges) {
-        std::cout << le << ' ';
-    }
-    std::cout << "chords: " << chords << std::endl;
-    std::cout << "angles of incident: [" << incidents.at(0)
-        << ", " << incidents.at(1) << ']' << '\n';
+    std::cout << leading_edge;
+    std::cout << "chords: " << chord << std::endl;
+    std::cout << "angles of incident: [" << incident << '\n';
 
 }
 
@@ -63,38 +60,39 @@ void Plane::read_json(std::ifstream& file) {
     json j_wings(j_plane["wing"]);
 
     for (auto& j_wing : j_wings) {
-        Wing wing(j_wing["n"]);
+        Wing wing(j_wing["#chordwise_panels"]);
 
-        json j_sections = j_wing["section"];
+        json j_sections = j_wing["sections"];
 
-        for (auto& j_section : j_sections) {
+        for (int i{ 0 }; i != j_sections.size(); i++) {
+            auto& j_section = j_sections[i];
+
             // read chords from json
-            std::vector<double> ch = j_section["chords"];
-            nc::NdArray<double> chords{ ch };
+            double chord{ j_section["chord"] };
 
             // read leading edge coordinates from json
-            std::array<std::array<double, 3>, 2> les(j_section["leading_edges"]);
-
-            nc::NdArray<double> le0{ les.at(0) };
-            nc::NdArray<double> le1{ les.at(1) };
+            std::array<double, 3> le = j_section["leading_edge"];
+            nc::NdArray<double> leading_edge{ le };
 
             // read number of spanwise splits from json
-            int m(j_section["m"]);
+            int m(j_section["#spanwise_panels"]);
 
             // read angles of incident from json
-            std::array<double, 2> incidents = j_section["i_angle"];
+            double incident = j_section["i_angle"];
 
             Section section(
                 m,
-                std::array<nc::NdArray<double>, 2> {le0, le1},
-                chords,
-                incidents
+                leading_edge,
+                chord,
+                incident
             );
 
             //section.print();
             wing.sections.push_back(section);
             wing.n_sections++;
-            wing.m_sum += section.m;
+
+            // Ignore first section. Mesh is generated from tip to root per section.
+            if (i != 0) { wing.m_sum += section.m; }
         }
 
         std::unique_ptr<Wing> wing_ptr = std::make_unique<Wing>(wing);

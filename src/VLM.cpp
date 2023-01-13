@@ -20,13 +20,9 @@ int main()
 
     Plane plane1{ f };
 
-    MultiMesh& plane_mesh = *plane1.mesh;
-    /*std::vector<Panel>& panels = plane_mesh[0]->getPanels();
-    for (auto& p : panels) {
-        p.print();
-    }*/
+    //MultiMesh& plane_mesh = *plane1.mesh;
 
-    for (Panel& panel : plane_mesh) {
+    for (Panel& panel : *plane1.mesh) {
         panel.print();
     }
 

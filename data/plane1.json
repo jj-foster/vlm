@@ -1,20 +1,26 @@
 {
-    "plane":{
-        "S_ref":0.1,
-        "b_ref":1,
-        "c_ref":0.1,
-        "wing":[
-            {
-                "n":1,
-                "section":[
-                    {
-                        "m":1,
-                        "leading_edges":[[0,0,0],[0,1,0]],
-                        "chords":[1,1],
-			                  "i_angle":[45,45]
-                    }
-                ]
-            }
+  "plane": {
+    "S_ref": 0.1,
+    "b_ref": 1,
+    "c_ref": 0.1,
+    "wing": [
+      {
+        "#chordwise_panels": 2,
+        "sections": [
+          {
+            "#spanwise_panels": 2,
+            "leading_edge": [ 0, 0, 0 ],
+            "chord": 1,
+            "i_angle": 0
+          },
+          {
+            "#spanwise_panels": 2,
+            "leading_edge": [ 0, 1, 0 ],
+            "chord": 1,
+            "i_angle": 0
+          }
         ]
-    }
+      }
+    ]
+  }
 }

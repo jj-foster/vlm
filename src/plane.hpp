@@ -54,20 +54,20 @@ class Section {
 public:
 
     int m;
-    std::array<nc::NdArray<double>, 2> leading_edges;
-    nc::NdArray<double> chords;
-    std::array<double, 2> incidents;
+    nc::NdArray<double> leading_edge;
+    double chord;
+    double incident;
 
     Section(
         int m,
-        std::array<nc::NdArray<double>, 2> leading_edges,
-        nc::NdArray<double> chords,
-        std::array<double,2> incidents
+        nc::NdArray<double> leading_edge,
+        double chord,
+        double incident
     )
-        : m{ m },
-        leading_edges{ leading_edges },
-        chords{ chords },
-        incidents{ incidents }
+        : m{ m }
+        , leading_edge{ leading_edge }
+        , chord{ chord }
+        , incident{ incident }
     {};
 
     void print();
