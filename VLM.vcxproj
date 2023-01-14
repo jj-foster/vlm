@@ -547,6 +547,7 @@
     <ClInclude Include="src\panel.hpp" />
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\plane.hpp" />
+    <ClInclude Include="src\utils.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
