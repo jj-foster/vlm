@@ -22,7 +22,7 @@ namespace utils
 		}
 
 		if (v <= a[0]) { return 0; }
-		if (v >= a.back()) { return a.size(); }
+		if (v >= a.back()) { return a.size() - 1; }
 
 		for (int i{ 1 }; i != a.size(); i++)
 		{

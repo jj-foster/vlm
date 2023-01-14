@@ -20,8 +20,6 @@ int main()
 
     Plane plane1{ f };
 
-    //MultiMesh& plane_mesh = *plane1.mesh;
-
     for (Panel& panel : *plane1.mesh) {
         panel.print();
     }

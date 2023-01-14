@@ -15,5 +15,8 @@
 #include <NumCpp/Functions/sin.hpp>
 #include <NumCpp/Functions/cos.hpp>
 #include <NumCpp/Functions/deg2rad.hpp>
+#include <NumCpp/Functions/floor.hpp>
+#include <NumCpp/Functions/ceil.hpp>
+#include <NumCpp/Functions/sort.hpp>
 
 #include <nlohmann/json.hpp>

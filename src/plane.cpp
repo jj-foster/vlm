@@ -80,11 +80,15 @@ void Plane::read_json(std::ifstream& file) {
             // read angles of incident from json
             double incident = j_section["i_angle"];
 
+            // read aerofoil .dat path from json
+            std::string aerofoil_file = j_section["aerofoil"];
+
             Section section(
                 m,
                 leading_edge,
                 chord,
-                incident
+                incident,
+                aerofoil_file
             );
 
             //section.print();

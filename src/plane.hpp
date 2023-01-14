@@ -3,6 +3,7 @@
 #include <pch.h>
 
 #include <mesh.hpp>
+#include <aerofoil.hpp>
 
 class Mesh;
 class MultiMesh;
@@ -57,18 +58,23 @@ public:
     nc::NdArray<double> leading_edge;
     double chord;
     double incident;
+    Aerofoil aerofoil;
 
     Section(
         int m,
         nc::NdArray<double> leading_edge,
         double chord,
-        double incident
+        double incident,
+        std::string aerofoil_file
     )
         : m{ m }
         , leading_edge{ leading_edge }
         , chord{ chord }
         , incident{ incident }
-    {};
+        , aerofoil{ aerofoil_file }
+    {
+        
+    };
 
     void print();
 
