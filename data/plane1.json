@@ -8,7 +8,7 @@
         "#chordwise_panels": 2,
         "sections": [
           {
-            "#spanwise_panels": 2,
+            "#spanwise_panels": 0,
             "leading_edge": [ 0, 0, 0 ],
             "chord": 1,
             "i_angle": 0,
@@ -19,7 +19,7 @@
             "leading_edge": [ 0, 1, 0 ],
             "chord": 1,
             "i_angle": 0,
-            "aerofoil": "D:\\Documents\\Projects\\cpp\\VLM\\data\\NACA0012.dat"
+            "aerofoil": "D:\\Documents\\Projects\\cpp\\VLM\\data\\NACA2412.dat"
           }
         ]
       }

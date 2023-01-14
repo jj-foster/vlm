@@ -244,11 +244,11 @@ nc::NdArray<double> Aerofoil::get_camber_points(int n, double chord)
 		L += L_is[i] - L ;
 	};
 
-	nc::NdArray<double> camber_interp = nc::zeros<double>(n, 3);
+	nc::NdArray<double> camber_interp = nc::zeros<double>(n + 1, 3);
 
-	double spacing{ L / (n - 1)};
+	double spacing{ L / (n)};
 	double dL{ 0 };
-	for (int i{ 0 }; i != n; i++)
+	for (int i{ 0 }; i != n + 1; i++)
 	{
 		// Search for index where cumulative length would lie.
 		int P1_i{ utils::search(L_is,dL,"left") };

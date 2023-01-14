@@ -10,9 +10,27 @@ void Mesh::generate(Wing* wing)
 }
 
 /// <summary>
-/// Calculates coordinates of mesh points. (Flat plate, no camber).
+/// Calculates coordinates of mesh points..
 /// </summary>
-void Mesh::calc_points(Wing* wing) {
+void Mesh::calc_points(Wing* wing)
+{
+    // Pre-generate camber coordiantes for each section
+    std::vector<nc::NdArray<double>> cambers;
+    for (int j{ 0 }; j != wing->sections.size(); j++)
+    {
+        Section& section{ wing->sections[j] };
+
+        const nc::NdArray<double>& camber{
+                section.aerofoil.get()->get_camber_points(
+                    wing->n,
+                    section.chord
+                )
+        };
+
+        cambers.push_back(camber);
+    }
+
+
     int N = (wing->m_sum + 1) * (wing->n + 1);
     points = nc::zeros<double>(N, 3);
 
@@ -29,21 +47,25 @@ void Mesh::calc_points(Wing* wing) {
             Section& section_curr{ wing->sections[j] };
             Section& section_prev{ wing->sections[j - 1] };
 
+            // Get camber coordinates for each section.
+            const nc::NdArray<double>& camber_curr{ cambers[j] };
+            const nc::NdArray<double>& camber_prev{ cambers[j - 1] };
+
             // Increment between spanwise splits down chord.
-            auto P1_increment = (double)i * section_prev.chord / wing->n;
-            auto P2_increment = (double)i * section_curr.chord / wing->n;
+            auto P1_increment{ camber_prev(i, camber_prev.cSlice()) + section_prev.leading_edge };
+            auto P2_increment{ camber_curr(i, camber_curr.cSlice()) + section_prev.leading_edge };
 
             // Vectors between spanwise splits down chord.
             nc::NdArray<double> P1_inc_vec{
-                P1_increment * nc::cos(nc::deg2rad(section_prev.incident)),
+                P1_increment[0] * nc::cos(nc::deg2rad(section_prev.incident)),
                 0,
-                -P1_increment* nc::sin(nc::deg2rad(section_prev.incident))
+                -P1_increment[2] * nc::sin(nc::deg2rad(section_prev.incident))
             };
 
             nc::NdArray<double> P2_inc_vec{
-                P2_increment * nc::cos(nc::deg2rad(section_curr.incident)),
+                P2_increment[0] * nc::cos(nc::deg2rad(section_curr.incident)),
                 0,
-                -P2_increment * nc::sin(nc::deg2rad(section_curr.incident))
+                -P2_increment[2] * nc::sin(nc::deg2rad(section_curr.incident))
             };
 
             // Vector between leading edge locations.

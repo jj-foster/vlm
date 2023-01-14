@@ -23,4 +23,5 @@ public:
 	Aerofoil(std::string filepath);
 
 	nc::NdArray<double> get_camber_points(int n, double chord);
+	const std::string get_filepath() const { return filepath; }
 };

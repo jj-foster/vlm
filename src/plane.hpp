@@ -58,20 +58,20 @@ public:
     nc::NdArray<double> leading_edge;
     double chord;
     double incident;
-    Aerofoil aerofoil;
+    std::shared_ptr<Aerofoil> aerofoil;
 
     Section(
         int m,
         nc::NdArray<double> leading_edge,
         double chord,
         double incident,
-        std::string aerofoil_file
+        std::shared_ptr<Aerofoil> aerofoil
     )
         : m{ m }
         , leading_edge{ leading_edge }
         , chord{ chord }
         , incident{ incident }
-        , aerofoil{ aerofoil_file }
+        , aerofoil{ aerofoil }
     {
         
     };

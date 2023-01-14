@@ -41,6 +41,7 @@ void Section::print() {
     std::cout << leading_edge;
     std::cout << "chords: " << chord << std::endl;
     std::cout << "angles of incident: [" << incident << '\n';
+    std::cout << "aerofoil file: " << aerofoil.get()->get_filepath() << '\n';
 
 }
 
@@ -58,6 +59,8 @@ void Plane::read_json(std::ifstream& file) {
     c_ref = j_plane["c_ref"];
 
     json j_wings(j_plane["wing"]);
+
+    std::vector<std::shared_ptr<Aerofoil>> aerofoils;
 
     for (auto& j_wing : j_wings) {
         Wing wing(j_wing["#chordwise_panels"]);
@@ -83,13 +86,31 @@ void Plane::read_json(std::ifstream& file) {
             // read aerofoil .dat path from json
             std::string aerofoil_file = j_section["aerofoil"];
 
-            Section section(
+            // Generate aerofoil if it doesn't already exist.
+            int a_index{ -1 };
+            std::shared_ptr<Aerofoil> aerofoil;
+
+            for (auto& a : aerofoils) {
+                if (a.get()->get_filepath() == aerofoil_file)
+                {
+                    aerofoil = a;
+                    a_index = 1;
+                    break;
+                }
+            }
+
+            if (a_index == -1) {
+                aerofoil = std::make_shared<Aerofoil>(aerofoil_file);
+                aerofoils.push_back(aerofoil);
+            }
+
+            Section section{
                 m,
                 leading_edge,
                 chord,
                 incident,
-                aerofoil_file
-            );
+                aerofoil
+            };
 
             //section.print();
             wing.sections.push_back(section);
