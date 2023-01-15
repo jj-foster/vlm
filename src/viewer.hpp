@@ -9,6 +9,7 @@ private:
 	const int screenWidth{ 800 };
 	const int screenHeight{ 500 };
 	const bool showCp;
+	const bool showNormals;
 
 	const rl::Vector3 x_axis{ 1,0,0 };
 	const float axis_rotation{ - nc::constants::pi / 2 };
@@ -23,10 +24,11 @@ private:
 public:
 	std::atomic<bool> running;
 
-	Viewer(MultiMesh* mesh, bool showCp = true)
+	Viewer(MultiMesh* mesh, bool showCp = true, bool showNormals = false)
 		: running{ true }
 		, currentMesh{ mesh }
 		, showCp{ showCp }
+		, showNormals{ showNormals }
 		, currentMeshLines{ currentMesh->getRlLines() }
 	{
 	};

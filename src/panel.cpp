@@ -80,7 +80,7 @@ void Panel::calc_normal() {
     auto n_ = nc::cross(P2cp,P1cp);
     auto n_normalized = n_ / nc::norm(n_)[0];
 
-    n = n_normalized;
+    normal = n_normalized;
 
 }
 
@@ -96,7 +96,7 @@ void Panel::print()
     std::cout << '\t' << "Area: " << area << '\n';
     std::cout << '\t' << "Co-location point: " << cp;
     std::cout << '\t' << "dy: " << dy << '\n';
-    std::cout << '\t' << "Normal: " << n << '\n';
+    std::cout << '\t' << "Normal: " << normal << '\n';
 
     if (gamma != 0) { std::cout << '\t' << "gamma: " << gamma << '\n'; }
     if (dL != 0) { std::cout << '\t' << "dL: " << dL << '\n'; }

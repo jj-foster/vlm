@@ -16,7 +16,7 @@ public:
     nc::NdArray<double> cp;
     nc::NdArray<double> B;
     nc::NdArray<double> C;
-    nc::NdArray<double> n;
+    nc::NdArray<double> normal;
 
     double dy;      // span
     double gamma;   // induced vorticity

@@ -25,7 +25,7 @@ int main()
         panel.print();
     }*/
 
-    Viewer window{plane1.mesh, true};
+    Viewer window{plane1.mesh, true, true};
     
     window.startWindowThreadJoined();
 
