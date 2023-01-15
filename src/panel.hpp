@@ -37,6 +37,10 @@ public:
     void calc_bound_vortex();
     void calc_normal();
 
+    const std::array<nc::NdArray<double>, 4> getCorners() const {
+        return { P1, P2, P3, P4 };
+    }
+
     void print();
 
 };

@@ -37,7 +37,7 @@ private:
 
 public:
     // Constructor.
-    MultiMesh(std::vector<std::shared_ptr<Mesh>> meshes) : meshes{ meshes } {}
+    MultiMesh(std::vector<std::shared_ptr<Mesh>> meshes) : meshes{ meshes } {};
 
     // [] overload. Allows easy access for each mesh in multimesh container.
     Mesh* operator[](int index) {
@@ -69,6 +69,28 @@ public:
 
         // ++ overload. Increments over each mesh then each panel.
         PanelIterator& operator++()
+        {
+            // If all panels in the current mesh have been iterated through,
+            // increment the mesh.
+            if (currentPanel == endPanel)
+            {
+                currentMeshIndex++;
+                // Redefine panels using next mesh.
+                if (currentMeshIndex != endMeshIndex) {
+                    currentPanel = meshes[currentMeshIndex]->getPanels().begin();
+                    endPanel = meshes[currentMeshIndex]->getPanels().end();
+                }
+            }
+            else
+            {
+                currentPanel++;
+            }
+
+            return *this;
+        }
+
+        // ++ overload but different? Used for traditional for loops.
+        PanelIterator operator++(int)
         {
             // If all panels in the current mesh have been iterated through,
             // increment the mesh.
@@ -124,7 +146,15 @@ public:
         return iter;
     }
 
-    void draw();
+    const std::vector<std::array<rl::Vector3, 2>> getRlLines();
+
+    const int sumPanels() {
+        int total{ 0 };
+        for (auto it = this->begin(); it != this->end(); it++) {
+            total++;
+        }
+
+        return total;
+    }
 
 };
-

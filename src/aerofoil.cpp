@@ -174,19 +174,31 @@ void Aerofoil::calc_camber()
 	nc::NdArray<double> upper{ ul[0] };
 	nc::NdArray<double> lower{ ul[1] };
 
+	if (upper.shape().rows != lower.shape().rows) {
+		std::cout << "Error: Uneven point distribution on upper and lower"
+			" surfaces of aerofoil '" << filepath << '\n';
+
+		exit(0);
+	}
+
 	int n_per_side = upper.shape().rows;
 
 	camber = nc::zeros<double>(n_per_side, 3);
 
+	bool warned{ false };
 	for (int i{ 0 }; i != n_per_side; i++)
 	{
 		double x_up{ upper(n_per_side - i - 1, 0) };
 		double x_lo{ lower(i, 0) };
 
 		if (x_up != x_lo) {
-			std::cout << "Error: Assymetric aerofoil." 
-				" Coordinates must be symmetrical in x." << '\n';
-			exit(0);
+			if (!warned) {
+				std::cout << "Warning: Assymetric aerofoil."
+					" Coordinates should be symmetrical in x." << '\n';
+				std::cout << "Camberline may be skewif." << '\n';
+
+				warned = true;
+			}
 		}
 
 		double z_up{ upper(n_per_side - i - 1, 2) };

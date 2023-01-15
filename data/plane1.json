@@ -5,21 +5,21 @@
     "c_ref": 0.1,
     "wing": [
       {
-        "#chordwise_panels": 2,
+        "#chordwise_panels": 10,
         "sections": [
           {
             "#spanwise_panels": 0,
             "leading_edge": [ 0, 0, 0 ],
-            "chord": 1,
+            "chord": 2,
             "i_angle": 0,
-            "aerofoil": "D:\\Documents\\Projects\\cpp\\VLM\\data\\NACA2412.dat"
+            "aerofoil": "D:\\Documents\\C++ Projects\\1. vlm\\data\\NACA2412.dat"
           },
           {
-            "#spanwise_panels": 2,
-            "leading_edge": [ 0, 1, 0 ],
-            "chord": 1,
+            "#spanwise_panels": 10,
+            "leading_edge": [ 0, 3, 0 ],
+            "chord": 2,
             "i_angle": 0,
-            "aerofoil": "D:\\Documents\\Projects\\cpp\\VLM\\data\\NACA2412.dat"
+            "aerofoil": "D:\\Documents\\C++ Projects\\1. vlm\\data\\NACA2412.dat"
           }
         ]
       }

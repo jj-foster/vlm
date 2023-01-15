@@ -2,6 +2,7 @@
 
 #include <plane.hpp>
 #include <mesh.hpp>
+#include <viewer.hpp>
 
 int main()
 {
@@ -12,7 +13,7 @@ int main()
     //std::cin >> filename;
     //
     //std::ifstream f{ filename };
-    std::ifstream f{ "D:\\Documents\\Projects\\cpp\\VLM\\data\\plane1.json" };
+    std::ifstream f{ "D:\\Documents\\C++ Projects\\1. vlm\\data\\plane1.json" };
     if (f.fail()) {
         std::cout << "File not found." << '\n';
         return 0;
@@ -20,9 +21,13 @@ int main()
 
     Plane plane1{ f };
 
-    for (Panel& panel : *plane1.mesh) {
+    /*for (Panel& panel : *plane1.mesh) {
         panel.print();
-    }
+    }*/
+
+    Viewer window{plane1.mesh, false};
+    
+    window.startWindowThreadJoined();
 
 	return 0;
 }

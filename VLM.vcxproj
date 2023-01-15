@@ -37,6 +37,7 @@
       </PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="src\plane.cpp" />
+    <ClCompile Include="src\viewer.cpp" />
     <ClCompile Include="src\VLM.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -548,6 +549,10 @@
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\plane.hpp" />
     <ClInclude Include="src\utils.hpp" />
+    <ClInclude Include="src\viewer.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="resources\fonts\Segoe UI.ttf" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

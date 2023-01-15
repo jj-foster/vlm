@@ -5,6 +5,7 @@
 #include <fstream>
 #include <array>
 #include <memory>
+#include <thread>
 
 #include <NumCpp/NdArray.hpp>
 #include <NumCpp/Functions/zeros.hpp>
@@ -20,3 +21,9 @@
 #include <NumCpp/Functions/sort.hpp>
 
 #include <nlohmann/json.hpp>
+
+namespace rl
+{ 
+#include <raylib.h>
+#include <raymath.h>
+}

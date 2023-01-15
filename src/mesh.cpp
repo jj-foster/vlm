@@ -21,15 +21,11 @@ void Mesh::calc_points(Wing* wing)
         Section& section{ wing->sections[j] };
 
         const nc::NdArray<double>& camber{
-                section.aerofoil.get()->get_camber_points(
-                    wing->n,
-                    section.chord
-                )
+                section.aerofoil.get()->get_camber_points( wing->n, section.chord )
         };
 
         cambers.push_back(camber);
     }
-
 
     int N = (wing->m_sum + 1) * (wing->n + 1);
     points = nc::zeros<double>(N, 3);
@@ -52,20 +48,27 @@ void Mesh::calc_points(Wing* wing)
             const nc::NdArray<double>& camber_prev{ cambers[j - 1] };
 
             // Increment between spanwise splits down chord.
-            auto P1_increment{ camber_prev(i, camber_prev.cSlice()) + section_prev.leading_edge };
-            auto P2_increment{ camber_curr(i, camber_curr.cSlice()) + section_prev.leading_edge };
+            auto P1_increment{
+                camber_prev(i, camber_prev.cSlice()) + section_prev.leading_edge };
+            auto P2_increment{
+                camber_curr(i, camber_curr.cSlice()) + section_prev.leading_edge };
 
             // Vectors between spanwise splits down chord.
+
+            double cos_prev{ nc::cos(nc::deg2rad(section_prev.incident)) };
+            double sin_prev{ nc::sin(nc::deg2rad(section_prev.incident)) };
+            double cos_curr{ nc::cos(nc::deg2rad(section_curr.incident)) };
+            double sin_curr{ nc::sin(nc::deg2rad(section_curr.incident)) };
             nc::NdArray<double> P1_inc_vec{
-                P1_increment[0] * nc::cos(nc::deg2rad(section_prev.incident)),
+                P1_increment[0] * cos_prev - P1_increment[2] * sin_prev,
                 0,
-                -P1_increment[2] * nc::sin(nc::deg2rad(section_prev.incident))
+                -(P1_increment[0] * sin_prev + P1_increment[2] * cos_prev)
             };
 
             nc::NdArray<double> P2_inc_vec{
-                P2_increment[0] * nc::cos(nc::deg2rad(section_curr.incident)),
+                P2_increment[0] * cos_curr - P1_increment[2] * sin_curr,
                 0,
-                -P2_increment[2] * nc::sin(nc::deg2rad(section_curr.incident))
+                -(P2_increment[0] * sin_curr + P1_increment[2] * cos_curr)
             };
 
             // Vector between leading edge locations.
@@ -133,7 +136,30 @@ void Mesh::calc_panels(Wing* wing) {
 
 }
 
-void MultiMesh::draw()
-{
 
+const std::vector<std::array<rl::Vector3, 2>> MultiMesh::getRlLines()
+{
+    const int line_size = sumPanels() * 4;
+    std::vector<std::array<rl::Vector3,2>> lines(line_size);
+
+    int i{ 0 };
+    for (auto it = this->begin(); it !=this->end(); it++)
+    {
+        const Panel& currentPanel = *it;
+        std::array<nc::NdArray<double>, 4> corners{ currentPanel.getCorners() };
+
+        rl::Vector3 P1_rl{ (float)corners[0][0],(float)corners[0][1],(float)corners[0][2] };
+        rl::Vector3 P2_rl{ (float)corners[1][0],(float)corners[1][1],(float)corners[1][2] };
+        rl::Vector3 P3_rl{ (float)corners[2][0],(float)corners[2][1],(float)corners[2][2] };
+        rl::Vector3 P4_rl{ (float)corners[3][0],(float)corners[3][1],(float)corners[3][2] };
+
+        lines[i] = { P1_rl, P2_rl };
+        lines[i+1] = { P2_rl, P3_rl };
+        lines[i+2] = { P3_rl, P4_rl };
+        lines[i+3] = { P4_rl, P1_rl };
+
+        i+=4;
+    }
+
+    return lines;
 }
