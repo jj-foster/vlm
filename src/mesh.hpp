@@ -64,7 +64,7 @@ public:
             , endMeshIndex{ meshes.size() }
         {
             currentPanel = meshes[0]->getPanels().begin();
-            endPanel = meshes[0]->getPanels().end();
+            endPanel = meshes[0]->getPanels().end() - 1;
         }
 
         // ++ overload. Increments over each mesh then each panel.
