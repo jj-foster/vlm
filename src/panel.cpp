@@ -34,7 +34,7 @@ void Panel::calc_area() {
     auto P34 = P4-P3;
     auto P41 = P1-P4;
 
-    S = 0.5*nc::norm(nc::cross(P12,P23)+nc::cross(P34,P41))[0];
+    area = 0.5*nc::norm(nc::cross(P12,P23)+nc::cross(P34,P41))[0];
 
 }
 
@@ -93,7 +93,7 @@ void Panel::print()
     std::cout << '\t' << P3;
     std::cout << '\t' << P4 << '\n';
 
-    std::cout << '\t' << "Area: " << S << '\n';
+    std::cout << '\t' << "Area: " << area << '\n';
     std::cout << '\t' << "Co-location point: " << cp;
     std::cout << '\t' << "dy: " << dy << '\n';
     std::cout << '\t' << "Normal: " << n << '\n';

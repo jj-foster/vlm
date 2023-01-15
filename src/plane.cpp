@@ -58,7 +58,7 @@ void Plane::read_json(std::ifstream& file) {
     b_ref = j_plane["b_ref"];
     c_ref = j_plane["c_ref"];
 
-    json j_wings(j_plane["wing"]);
+    json j_wings(j_plane["wings"]);
 
     std::vector<std::shared_ptr<Aerofoil>> aerofoils;
 

@@ -16,10 +16,8 @@ void Mesh::calc_points(Wing* wing)
 {
     // Pre-generate camber coordiantes for each section
     std::vector<nc::NdArray<double>> cambers;
-    for (int j{ 0 }; j != wing->sections.size(); j++)
+    for (Section& section : wing->sections)
     {
-        Section& section{ wing->sections[j] };
-
         const nc::NdArray<double>& camber{
                 section.aerofoil.get()->get_camber_points( wing->n, section.chord )
         };
@@ -33,7 +31,7 @@ void Mesh::calc_points(Wing* wing)
     int point_count{ 0 };
 
     // Loop through chordwise splits
-    for (int i{ 0 }; i <= (wing->n); i++) {
+    for (int i{ 0 }; i <= wing->n; i++) {
         int s(0);
 
         // Loop through sections i.e. where chord, leading edge coordinates 
@@ -48,27 +46,26 @@ void Mesh::calc_points(Wing* wing)
             const nc::NdArray<double>& camber_prev{ cambers[j - 1] };
 
             // Increment between spanwise splits down chord.
-            auto P1_increment{
-                camber_prev(i, camber_prev.cSlice()) + section_prev.leading_edge };
-            auto P2_increment{
-                camber_curr(i, camber_curr.cSlice()) + section_prev.leading_edge };
+            auto P1_increment{ camber_prev(i, camber_prev.cSlice()) };
+            auto P2_increment{ camber_curr(i, camber_curr.cSlice()) };
+
+            // Rotation about leading edge for incident angle
+            double cos_prev{ nc::cos(nc::deg2rad(section_prev.incident)) };
+            double sin_prev{ -nc::sin(nc::deg2rad(section_prev.incident)) };
+            double cos_curr{ nc::cos(nc::deg2rad(section_curr.incident)) };
+            double sin_curr{ -nc::sin(nc::deg2rad(section_curr.incident)) };
 
             // Vectors between spanwise splits down chord.
-
-            double cos_prev{ nc::cos(nc::deg2rad(section_prev.incident)) };
-            double sin_prev{ nc::sin(nc::deg2rad(section_prev.incident)) };
-            double cos_curr{ nc::cos(nc::deg2rad(section_curr.incident)) };
-            double sin_curr{ nc::sin(nc::deg2rad(section_curr.incident)) };
             nc::NdArray<double> P1_inc_vec{
                 P1_increment[0] * cos_prev - P1_increment[2] * sin_prev,
                 0,
-                -(P1_increment[0] * sin_prev + P1_increment[2] * cos_prev)
+                P1_increment[0] * sin_prev + P1_increment[2] * cos_prev
             };
 
             nc::NdArray<double> P2_inc_vec{
-                P2_increment[0] * cos_curr - P1_increment[2] * sin_curr,
+                P2_increment[0] * cos_curr - P2_increment[2] * sin_curr,
                 0,
-                -(P2_increment[0] * sin_curr + P1_increment[2] * cos_curr)
+                P2_increment[0] * sin_curr + P2_increment[2] * cos_curr
             };
 
             // Vector between leading edge locations.

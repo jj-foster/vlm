@@ -12,7 +12,7 @@ void Viewer::startWindow()
 
 	// Define camera to look into 3D scene
 	rl::Camera3D camera{ 0 };
-	camera.position = Vector3{ 10.0f,10.0f,10.0f };
+	camera.position = Vector3{ 5.0f,5.0f,5.0f };
 	camera.target = Vector3{ 0.0f,0.0f,0.0f };
 	camera.up = Vector3{ 0.0f,1.0f,0.0f };
 	camera.fovy = 45.0f;
@@ -39,10 +39,25 @@ void Viewer::startWindow()
 	// Main game loop
 	while (running.load() && !rl::WindowShouldClose())
 	{
-		// Update
+		// Update camera
 		rl::UpdateCamera(&camera);
-		if (rl::IsKeyDown('Z')) { camera.target = Vector3{ 0.0f,0.0f,0.0f }; }
+		if (rl::IsMouseButtonDown(rl::MOUSE_BUTTON_MIDDLE)) 
+			{ camera.target = Vector3{ 0.0f,0.0f,0.0f }; }
 
+		/*float camera_pos{ rl::Vector3Length(camera.position) };
+		if (rl::IsKeyReleased(rl::KEY_UP)) {
+			rl::SetCameraMode(camera, rl::CAMERA_CUSTOM);
+			camera.position = Vector3{ 0.0f, camera_pos, 0.0f };
+		}
+		if (rl::IsKeyReleased(rl::KEY_RIGHT)) {
+			rl::SetCameraMode(camera, rl::CAMERA_CUSTOM);
+			camera.position = Vector3{ camera_pos, 0.0f, 0.0f };
+		}
+		if (rl::IsKeyReleased(rl::KEY_DOWN)) {
+			rl::SetCameraMode(camera, rl::CAMERA_CUSTOM);
+			camera.position = Vector3{ 0.0f, 0.0f, camera_pos };
+		}*/
+		
 		rl::SetWindowTitle(
 			(std::to_string(rl::GetFPS())+" fps").c_str()
 		);
@@ -99,7 +114,7 @@ void Viewer::startWindow()
 void Viewer::startWindowThreadJoined()
 {
 	// Pause to let raylib startup.
-	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+	std::this_thread::sleep_for(std::chrono::milliseconds(0));
 
 	std::thread windowThread(&Viewer::startWindow, this);
 	windowThread.join();
@@ -107,7 +122,7 @@ void Viewer::startWindowThreadJoined()
 void Viewer::startWindowThreadDetached()
 {
 	// Pause to let raylib startup.
-	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+	std::this_thread::sleep_for(std::chrono::milliseconds(0));
 
 	std::thread windowThread(&Viewer::startWindow, this);
 	windowThread.detach();
@@ -130,12 +145,13 @@ void Viewer::drawMesh(MultiMesh* mesh, rl::Camera camera)
 			Vector3 cp_pos_{ (float)p.cp[0], (float)p.cp[1], (float)p.cp[2] };
 			Vector3 cp_pos{ rl::Vector3RotateByAxisAngle(cp_pos_, x_axis, axis_rotation) };
 
-			auto dist_camera = rl::Vector3Length(
-				rl::Vector3Subtract(camera.position, cp_pos)) * 0.005f;
+			float p_dy{ (float)p.dy };
 
-			rl::DrawSphere(
+			rl::DrawSphereEx(
 				cp_pos,
-				dist_camera,
+				p_dy / 20.0f,
+				5,
+				5,
 				rl::RED
 			);
 		}

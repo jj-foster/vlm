@@ -12,17 +12,17 @@ private:
     int id;
 
 public:
-    double S;
+    double area;
     nc::NdArray<double> cp;
     nc::NdArray<double> B;
     nc::NdArray<double> C;
     nc::NdArray<double> n;
 
-    double dy;
-    double gamma;
-    double dL;
-    double w_ind;
-    double dD;
+    double dy;      // span
+    double gamma;   // induced vorticity
+    double dL;      // induced lift
+    double w_ind;   // induced velocity
+    double dD;      // induced drag
 
     Panel(
         nc::NdArray<double> P1,

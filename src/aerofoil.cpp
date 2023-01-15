@@ -193,9 +193,9 @@ void Aerofoil::calc_camber()
 
 		if (x_up != x_lo) {
 			if (!warned) {
-				std::cout << "Warning: Assymetric aerofoil."
-					" Coordinates should be symmetrical in x." << '\n';
-				std::cout << "Camberline may be skewif." << '\n';
+				std::cout << "Warning: Assymetric aerofoil: '" << filepath << "'\n";
+				std::cout << "Coordinates should be symmetrical in x."
+					" Camberline may be skewif." << '\n';
 
 				warned = true;
 			}

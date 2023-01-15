@@ -11,7 +11,8 @@ private:
 	const bool showCp;
 
 	const rl::Vector3 x_axis{ 1,0,0 };
-	const float axis_rotation{ nc::constants::pi / 2 };
+	const float axis_rotation{ - nc::constants::pi / 2 };
+	//const float axis_rotation{ 0 };
 
 	MultiMesh* currentMesh;
 	const std::vector<std::array<rl::Vector3, 2>> currentMeshLines;
