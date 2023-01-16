@@ -98,7 +98,7 @@ void Panel::print()
     std::cout << '\t' << "dy: " << dy << '\n';
     std::cout << '\t' << "Normal: " << normal << '\n';
 
-    if (gamma != 0) { std::cout << '\t' << "gamma: " << gamma << '\n'; }
+    if (vorticity != 0) { std::cout << '\t' << "vorticity: " << vorticity << '\n'; }
     if (dL != 0) { std::cout << '\t' << "dL: " << dL << '\n'; }
     if (w_ind != 0) { std::cout << '\t' << "w_ind: " << w_ind << '\n'; }
     if (dDi != 0) { std::cout << '\t' << "dD: " << dDi << '\n'; }

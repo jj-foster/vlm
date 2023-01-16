@@ -19,10 +19,10 @@ public:
     nc::NdArray<double> normal;
 
     double dy;      // span
-    double gamma;   // induced vorticity
-    double dL;      // induced lift
-    double w_ind;   // induced velocity
-    double dDi;      // induced drag
+    double vorticity{ 0 };   // induced vorticity
+    double dL{ 0 };      // induced lift
+    double w_ind{ 0 };   // induced velocity
+    double dDi{ 0 };      // induced drag
 
     Panel(
         nc::NdArray<double> P1,
