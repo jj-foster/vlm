@@ -5,6 +5,8 @@
 #include <viewer.hpp>
 #include <vlm.hpp>
 
+#include <chrono>
+
 int main()
 {
 
@@ -22,17 +24,22 @@ int main()
 
     Plane plane{ f };
 
-    for (Panel& panel : *plane.mesh) {
+    /*for (Panel& panel : *plane.mesh) {
         panel.print();
-    }
+    }*/
 
 
     Vlm vlm{ &plane };
-    double Qinf{ 1 };
-    double alpha{ 0 };
+    double Qinf{ 30 };
+    double alpha{ 10 };
     double beta{ 0 };
     double rho{ 1.225 };
+
+    auto start{ std::chrono::high_resolution_clock::now() };
     vlm.runHorseshoe(Qinf, alpha, beta, rho);
+    auto stop{ std::chrono::high_resolution_clock::now() };
+
+    std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(stop - start) << '\n';
 
     double CL{ vlm.getCL() };
     double CDi{ vlm.getCDi() };
@@ -40,7 +47,7 @@ int main()
     std::cout << "CL: " << CL << '\n';
     std::cout << "CDi: " << CDi << "\n\n";
 
-    Viewer window{ plane.mesh, true, true };
+    Viewer window{ plane.mesh, false, false };
     window.startWindowThreadJoined();
 
     //std::cin.get();
