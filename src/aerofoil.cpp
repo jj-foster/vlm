@@ -176,7 +176,7 @@ void Aerofoil::calc_camber()
 
 	if (upper.shape().rows != lower.shape().rows) {
 		std::cout << "Error: Uneven point distribution on upper and lower"
-			" surfaces of aerofoil '" << filepath << '\n';
+			" surfaces of aerofoil '" << filepath << "\n\n";
 
 		exit(0);
 	}
@@ -195,7 +195,7 @@ void Aerofoil::calc_camber()
 			if (!warned) {
 				std::cout << "Warning: Assymetric aerofoil: '" << filepath << "'\n";
 				std::cout << "Coordinates should be symmetrical in x."
-					" Camberline may be skewif." << '\n';
+					" Camberline may be skewif." << "\n\n";
 
 				warned = true;
 			}
