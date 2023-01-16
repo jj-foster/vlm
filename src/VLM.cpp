@@ -11,7 +11,7 @@ Vlm::Vlm(Plane* plane)
 // Calculates induced velocity on a point due to a line vortex element.
 std::array<double,3> Vlm::lineVortex(
 	double x, double y, double z, double x1, double y1, double z1,
-	double x2, double y2, double z2, double gamma, double R
+	double x2, double y2, double z2, double vorticity, double R
 )
 {
 	std::array<double, 3> inducedVelocity{ 0,0,0 };
@@ -39,7 +39,7 @@ std::array<double,3> Vlm::lineVortex(
 	double r0dotr2{ (x2 - x1) * (x - x2) + (y2 - y1) * (y - y2) + (z2 - z1) * (z - z2) };
 
 	double K{
-		(gamma / (4 * nc::constants::pi * r1x2_mod2)) * 
+		(vorticity / (4 * nc::constants::pi * r1x2_mod2)) * 
 		((r0dotr1 / r1_mod) - (r0dotr2 / r2_mod))
 	};
 
@@ -54,13 +54,13 @@ std::array<double,3> Vlm::lineVortex(
 std::array<std::array<double, 3>, 2> Vlm::horseshoeVortex(
 	double x, double y, double z, double xA, double yA, double zA,
 	double xB, double yB, double zB, double xC, double yC, double zC,
-	double xD, double yD, double zD, double gamma, double R
+	double xD, double yD, double zD, double vorticity, double R
 )
 {
 	// Induced velocities by each line vortex in the trailing vortex
-	std::array<double, 3> q1{ lineVortex(x,y,z,xA,yA,zA,xB,yB,zB,gamma,R) };
-	std::array<double, 3> q2{ lineVortex(x,y,z,xB,yB,zB,xC,yC,zC,gamma,R) };
-	std::array<double, 3> q3{ lineVortex(x,y,z,xC,yC,zC,xD,yD,zD,gamma,R) };
+	std::array<double, 3> q1{ lineVortex(x,y,z,xA,yA,zA,xB,yB,zB,vorticity,R) };
+	std::array<double, 3> q2{ lineVortex(x,y,z,xB,yB,zB,xC,yC,zC,vorticity,R) };
+	std::array<double, 3> q3{ lineVortex(x,y,z,xC,yC,zC,xD,yD,zD,vorticity,R) };
 
 	// Induced velocity by horseshoe vortex on point P
 	std::array<double, 3> q{
@@ -116,6 +116,7 @@ void Vlm::runHorseshoe(double Qinf, double alpha, double beta, double atmosphere
 	int i{ 0 };
 	for (Panel& p0 : *plane->mesh)
 	{	
+		// std::cout << i << '\n';
 		RHS(0, i) = nc::dot(-Qinf_vec, p0.normal)[0];
 
 		double x{ p0.cp(0,0) };
@@ -171,18 +172,20 @@ void Vlm::runHorseshoe(double Qinf, double alpha, double beta, double atmosphere
 		i++;
 	}
 
-	nc::NdArray<double> gamma{ nc::linalg::solve(a,RHS) };
-	nc::NdArray<double> w_ind{ nc::matmul(b,gamma) };
+	nc::NdArray<double> vorticity{ nc::linalg::solve(a,RHS) };
+	nc::NdArray<double> w_ind{ nc::matmul(b,vorticity) };
 
 	// Aero force computation
 	int k{ 0 };
 	for (Panel& p : *plane->mesh)
 	{
-		p.gamma = gamma(k, 0);
+		p.vorticity = vorticity[k];
 		p.w_ind = w_ind(k, 0);
 
-		p.dL = rho * Qinf * gamma(k, 0) * p.dy;
-		p.dDi = -rho * w_ind(k, 0) * gamma(k, 0) * p.dy;
+		p.dL = rho * this->Qinf * vorticity(k, 0) * p.dy;
+		p.dDi = -rho * w_ind(k, 0) * vorticity(k, 0) * p.dy;
+
+		k++;
 	}
 
 }
