@@ -1,7 +1,7 @@
 #include <pch.h>
 
 #include <aerofoil.hpp>
-#include <utils.hpp>
+#include <utils/algorithms.hpp>
 
 Aerofoil::Aerofoil(std::string filepath)
 	: filepath{ filepath }
