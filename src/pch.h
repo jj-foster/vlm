@@ -7,6 +7,7 @@
 #include <memory>
 #include <thread>
 #include <cmath>
+#include <algorithm>
 
 #include <NumCpp/NdArray.hpp>
 #include <NumCpp/Functions/zeros.hpp>
