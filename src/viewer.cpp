@@ -162,7 +162,7 @@ void Viewer::drawMesh(MultiMesh* mesh, rl::Camera camera)
 			Vector3 normal_{ (float)p.normal[0], (float)p.normal[1], (float)p.normal[2] };
 			Vector3 normal{ rl::Vector3RotateByAxisAngle(normal_, x_axis, axis_rotation) };
 
-			float normalLength{ (float)p.dy * 0.5f };
+			float normalLength{ (float)p.dy * 0.7f };
 			Vector3 normalLengthVec{ normalLength, normalLength, normalLength };
 
 			rl::DrawLine3D(
