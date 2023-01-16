@@ -22,7 +22,7 @@ public:
     double gamma;   // induced vorticity
     double dL;      // induced lift
     double w_ind;   // induced velocity
-    double dD;      // induced drag
+    double dDi;      // induced drag
 
     Panel(
         nc::NdArray<double> P1,

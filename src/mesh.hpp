@@ -42,7 +42,7 @@ public:
     MultiMesh(std::vector<std::shared_ptr<Mesh>> meshes);
 
     // [] overload. Allows easy access for each mesh in multimesh container.
-    Mesh* operator[](int index) {
+    Mesh* at(int index) {
         return meshes[index].get();
     }
 
