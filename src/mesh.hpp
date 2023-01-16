@@ -36,8 +36,10 @@ private:
     std::vector<std::shared_ptr<Mesh>> meshes;
 
 public:
+    const int nPanels;
+
     // Constructor.
-    MultiMesh(std::vector<std::shared_ptr<Mesh>> meshes) : meshes{ meshes } {};
+    MultiMesh(std::vector<std::shared_ptr<Mesh>> meshes);
 
     // [] overload. Allows easy access for each mesh in multimesh container.
     Mesh* operator[](int index) {
@@ -61,10 +63,10 @@ public:
         PanelIterator(std::vector<std::shared_ptr<Mesh>> meshes)
             : meshes{ meshes }
             , currentMeshIndex{ 0 }
-            , endMeshIndex{ meshes.size() }
+            , endMeshIndex{ meshes.size()}  // One past the end of the array
         {
             currentPanel = meshes[0]->getPanels().begin();
-            endPanel = meshes[0]->getPanels().end() - 1;
+            endPanel = meshes[0]->getPanels().end();    // One past the end of the array
         }
 
         // ++ overload. Increments over each mesh then each panel.
@@ -72,6 +74,7 @@ public:
         {
             // If all panels in the current mesh have been iterated through,
             // increment the mesh.
+            currentPanel++;
             if (currentPanel == endPanel)
             {
                 currentMeshIndex++;
@@ -80,10 +83,6 @@ public:
                     currentPanel = meshes[currentMeshIndex]->getPanels().begin();
                     endPanel = meshes[currentMeshIndex]->getPanels().end();
                 }
-            }
-            else
-            {
-                currentPanel++;
             }
 
             return *this;
@@ -94,6 +93,7 @@ public:
         {
             // If all panels in the current mesh have been iterated through,
             // increment the mesh.
+            currentPanel++;
             if (currentPanel == endPanel)
             {
                 currentMeshIndex++;
@@ -102,10 +102,6 @@ public:
                     currentPanel = meshes[currentMeshIndex]->getPanels().begin();
                     endPanel = meshes[currentMeshIndex]->getPanels().end();
                 }
-            }
-            else
-            {
-                currentPanel++;
             }
 
             return *this;
@@ -130,8 +126,8 @@ public:
         // Set the current mesh and panel to their respective iterator ends.
         // Used for end() function for range-based for loops.
         void setEnd() {
-            currentMeshIndex = endMeshIndex - 1;
-            currentPanel = meshes[currentMeshIndex]->getPanels().end();
+            currentMeshIndex = endMeshIndex;
+            currentPanel = meshes[currentMeshIndex - 1]->getPanels().end();
         }
     };
 

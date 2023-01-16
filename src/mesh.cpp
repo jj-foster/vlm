@@ -133,10 +133,16 @@ void Mesh::calc_panels(Wing* wing) {
 
 }
 
+MultiMesh::MultiMesh(std::vector<std::shared_ptr<Mesh>> meshes)
+    : meshes{ meshes }
+    , nPanels{sumPanels()}
+{
+
+}
 
 const std::vector<std::array<rl::Vector3, 2>> MultiMesh::getRlLines()
 {
-    const int line_size = sumPanels() * 4;
+    const int line_size = nPanels * 4;
     std::vector<std::array<rl::Vector3,2>> lines(line_size);
 
     int i{ 0 };
