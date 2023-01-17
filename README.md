@@ -2,9 +2,12 @@
 
 ### TODO:
 
-- viewer
-	- replace mesh input with plane input
-	- colour bar on the side
--vlm
+- vlm
+	- alpha range
 	- ring vortex
+		- wake generation
+
+- viewer
+	- draw wake
+
 - plane .json input screening

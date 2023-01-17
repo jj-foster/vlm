@@ -26,7 +26,7 @@ int main()
         panel.print();
     }*/
 
-
+    
     Vlm vlm{ &plane };
     double Qinf{ 1 };
     double alpha{ 10 };

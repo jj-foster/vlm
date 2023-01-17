@@ -14,6 +14,7 @@ class Plane {
 
 private:
     void read_json(std::ifstream& file);
+    void calc_ref();
 
 public:
 

@@ -8,6 +8,7 @@ using json = nlohmann::json;
 Plane::Plane(std::ifstream& f) {
 
     read_json(f);
+    calc_ref();
 
     // generate wing meshes.
     for (auto& wing : wings) {
@@ -51,14 +52,9 @@ void Section::print() {
 /// 
 /// <param name="file"> {std::ifstream}: Input .json filesream.</param>
 void Plane::read_json(std::ifstream& file) {
-    json j_plane = json::parse(file)["plane"];
+
+    json j_wings = json::parse(file)["wings"];
     file.close();
-
-    S_ref = j_plane["S_ref"];
-    b_ref = j_plane["b_ref"];
-    c_ref = j_plane["c_ref"];
-
-    json j_wings(j_plane["wings"]);
 
     std::vector<std::shared_ptr<Aerofoil>> aerofoils;
 
@@ -125,4 +121,37 @@ void Plane::read_json(std::ifstream& file) {
         n_wings++;
 
     }
+}
+
+void Plane::calc_ref()
+{
+    Wing* main_wing = wings[0].get();
+
+    double b{ 0 };
+    double Sw{ 0 };
+    double MAC{ 0 };
+
+    double b_i{ 0 };
+    for (int i{ 1 }; i != main_wing->sections.size(); i++)
+    {
+        Section& s_curr{ main_wing->sections[i] };
+        Section& s_prev{ main_wing->sections[i - 1] };
+
+        double c_curr{ s_curr.chord };
+        double c_prev{ s_prev.chord };
+
+        b_i = 2 * std::sqrt(
+            std::pow(s_curr.leading_edge[1] - s_prev.leading_edge[1], 2)
+            + std::pow(s_curr.leading_edge[2] - s_prev.leading_edge[2], 2)
+        );
+        b += b_i;
+
+        Sw += 0.5 * (c_curr + c_prev) * b_i;
+    }
+
+    MAC = Sw / b;
+
+    S_ref = Sw;
+    b_ref = b;
+    c_ref = MAC;
 }
