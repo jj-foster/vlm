@@ -8,6 +8,7 @@
 #include <thread>
 #include <cmath>
 #include <algorithm>
+#include <chrono>
 
 #include <NumCpp/NdArray.hpp>
 #include <NumCpp/Functions/zeros.hpp>
@@ -31,3 +32,15 @@ namespace rl {
 #include <raymath.h>
 
 }
+
+#if defined(_WIN32)
+	#define NOGDI
+	#define NOUSER
+#endif
+
+#include <indicators.hpp>
+
+//#if defined (_WIN32)
+//	#undef near
+//	#undef far
+//#endif
