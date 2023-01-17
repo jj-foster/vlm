@@ -1577,6 +1577,9 @@
     <ClInclude Include="includes\raygui.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="includes\indicators.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Font Include="resources\fonts\Segoe UI.ttf" />

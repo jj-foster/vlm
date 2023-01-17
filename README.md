@@ -3,7 +3,8 @@
 ### TODO:
 
 - viewer
-	- draw dL & dD on each panel (solid colour & colourbar)
+	- replace mesh input with plane input
+	- colour bar on the side
 -vlm
 	- ring vortex
 - plane .json input screening

@@ -56,6 +56,7 @@ void Viewer::startWindow()
 			(std::to_string(rl::GetFPS())+" fps").c_str()
 		);
 
+		// Cycle through aero maps
 		if (rl::IsKeyPressed(rl::KEY_RIGHT)) {
 			switch (aeroVis)
 			{
@@ -116,13 +117,37 @@ void Viewer::startWindow()
 			rl::EndMode3D();
 
 
-			//// GUI
-			//rl::DrawLine(
-			//	screenWidth - 200, 0, screenWidth - 200,
-			//	screenHeight, rl::Fade(rl::WHITE, 1.0f));
-			//rl::DrawRectangle(
-			//	screenWidth - 200, 0, 200,
-			//	screenHeight, rl::Fade(rl::WHITE, 1.0f));
+			// GUI
+			std::string type_str;
+			switch (aeroVis)
+			{
+			case AeroVis::mesh: type_str = "Mesh"; break;
+			case AeroVis::lift: type_str = "Lift"; break;
+			case AeroVis::drag: type_str = "Drag"; break;
+			case AeroVis::downwash: type_str = "Downwash"; break;
+			}
+			rl::DrawText(type_str.c_str(), 10, 10, 25, rl::WHITE);
+
+			rl::DrawText(	// Reference area
+				("Sw: " + std::to_string(vlm->getPlane()->S_ref)).c_str(),
+				10, screenHeight - 100, 18, rl::WHITE
+			);
+			rl::DrawText(	// Reference span
+				("b: " + std::to_string(vlm->getPlane()->b_ref)).c_str(),
+				10, screenHeight - 80, 18, rl::WHITE
+			);
+			rl::DrawText(	// Reference chord
+				("MAC: " + std::to_string(vlm->getPlane()->c_ref)).c_str(),
+				10, screenHeight - 60, 18, rl::WHITE
+			);
+			rl::DrawText(
+				("CL: " + std::to_string(vlm->CL)).c_str(),
+				10, screenHeight - 40, 18, rl::SKYBLUE
+			);
+			rl::DrawText(
+				("CD: " + std::to_string(vlm->CDi)).c_str(),
+				10, screenHeight - 20, 18, rl::SKYBLUE
+			);
 
 		}
 		rl::EndDrawing();

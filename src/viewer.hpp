@@ -1,20 +1,18 @@
 #pragma once
 #include <pch.h>
+#include <utils/colourmap.hpp>
 
 #include <mesh.hpp>
-#include <utils/colourmap.hpp>
+#include <vlm.hpp>
 
 using rl::Vector3;
 
 class Viewer
 {
 private:
-	int screenWidth{ 800 };
-	int screenHeight{ 500 };
-	const bool showCp;
-	const bool showNormals;
-
-	utils::colourMap::CmType cmType = utils::colourMap::CmType::Jet;
+	Vlm* vlm;
+	MultiMesh* mesh;
+	const std::vector<std::array<Vector3, 2>> meshLines;
 
 	enum class AeroVis {
 		mesh, lift, drag, downwash
@@ -36,11 +34,16 @@ private:
 
 	PanelData panelData;
 
+	int screenWidth{ 800 };
+	int screenHeight{ 500 };
+	const bool showCp;
+	const bool showNormals;
+
+	utils::colourMap::CmType cmType = utils::colourMap::CmType::Coolwarm;
+
+
 	const Vector3 x_axis{ 1,0,0 };
 	const float axis_rotation{ (float)(- nc::constants::pi / 2) };
-
-	MultiMesh* mesh;
-	const std::vector<std::array<Vector3, 2>> meshLines;
 
 	void startWindow();
 
@@ -53,9 +56,10 @@ private:
 public:
 	std::atomic<bool> running;
 
-	Viewer(MultiMesh* mesh, bool showCp = true, bool showNormals = false)
+	Viewer(Vlm* vlm, bool showCp = true, bool showNormals = false)
 		: running{ true }
-		, mesh{ mesh }
+		, vlm { vlm }
+		, mesh{ vlm->getPlane()->mesh}
 		, showCp{ showCp }
 		, showNormals{ showNormals }
 		, meshLines{ mesh->getRlLines() }

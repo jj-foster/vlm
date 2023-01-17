@@ -33,4 +33,6 @@ public:
 	void runHorseshoe(double Qinf, double alpha, double beta, double atmosphereDensity);
 	void runRing();
 
+	const Plane* getPlane() { return plane; }
+
 };

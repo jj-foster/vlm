@@ -42,7 +42,7 @@ int main()
     std::cout << "CL: " << vlm.CL << '\n';
     std::cout << "CDi: " << vlm.CDi << "\n\n";
 
-    Viewer window{ plane.mesh, false, false };
+    Viewer window{ &vlm, false, false };
     window.startWindowThreadJoined();
 
     //std::cin.get();
