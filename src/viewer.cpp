@@ -140,14 +140,70 @@ void Viewer::startWindow()
 				("MAC: " + std::to_string(vlm->getPlane()->c_ref)).c_str(),
 				10, screenHeight - 60, 18, rl::WHITE
 			);
-			rl::DrawText(
+			rl::DrawText(	// CL
 				("CL: " + std::to_string(vlm->CL)).c_str(),
 				10, screenHeight - 40, 18, rl::SKYBLUE
 			);
-			rl::DrawText(
+			rl::DrawText(	// CD
 				("CD: " + std::to_string(vlm->CDi)).c_str(),
 				10, screenHeight - 20, 18, rl::SKYBLUE
 			);
+
+			// Colourbar
+			if (aeroVis != AeroVis::mesh) {
+				rl::DrawRectangleLines(
+					screenWidth - 60, 60, 30, screenHeight - 120, rl::WHITE);
+
+				float x{ 0 };
+				float y_pos{ 0 };
+				float dy{ ((float)screenHeight - 121) / 21 };
+				for (int i{ 0 }; i != 21; i++)
+				{
+					x = (float)i / 21;
+					y_pos = 61 + x * (screenHeight - 121);
+
+					utils::colourMap::Colour colour =
+						utils::colourMap::getColour(1 - x, cmType);
+					rl::Color cb_i{
+						(unsigned char)(colour.r() * 255),
+						(unsigned char)(colour.g() * 255),
+						(unsigned char)(colour.b() * 255),
+						(unsigned char)(255)
+					};
+
+					rl::DrawRectangle(
+						screenWidth - 59, y_pos, 28, dy, cb_i
+					);
+				}
+
+				// Text
+				double panel_max{ 0 };
+				double panel_min{ 0 };
+				switch (aeroVis) {
+				case AeroVis::lift:
+					panel_max = panelData.Lmax;
+					panel_min = panelData.Lmin;
+					break;
+				case AeroVis::drag:
+					panel_max = panelData.Dmax;
+					panel_min = panelData.Dmin;
+					break;
+				case AeroVis::downwash:
+					panel_max = panelData.wmax;
+					panel_min = panelData.wmin;
+					break;
+				default:
+					break;
+				}
+
+				rl::DrawText(
+					std::to_string(panel_max).c_str(),
+					screenWidth - 80, 40, 15, rl::WHITE);
+				rl::DrawText(
+					std::to_string(panel_min).c_str(),
+					screenWidth - 80, screenHeight-55, 15, rl::WHITE);
+
+			}
 
 		}
 		rl::EndDrawing();
@@ -245,7 +301,7 @@ void Viewer::drawMesh()
 			rl::DrawLine3D(start, end, rl::WHITE);
 		}
 		else {
-			rl::DrawLine3D(start, end, rl::BLACK);
+			//rl::DrawLine3D(start, end, rl::BLACK);
 		}
 		
 	}
@@ -258,17 +314,13 @@ void Viewer::drawL()
 	{
 		std::array<nc::NdArray<double>,4> corners = p.getCorners();
 		Vector3 P1_{ 
-			(float)corners[0][0], (float)corners[0][1], 
-			(float)corners[0][2]- (float)0.0001 };
+			(float)corners[0][0], (float)corners[0][1], (float)corners[0][2] };
 		Vector3 P2_{ 
-			(float)corners[1][0], (float)corners[1][1], 
-			(float)corners[1][2] - (float)0.0001 };
+			(float)corners[1][0], (float)corners[1][1], (float)corners[1][2] };
 		Vector3 P3_{ 
-			(float)corners[2][0], (float)corners[2][1], 
-			(float)corners[2][2] - (float)0.0001 };
+			(float)corners[2][0], (float)corners[2][1], (float)corners[2][2] };
 		Vector3 P4_{ 
-			(float)corners[3][0], (float)corners[3][1], 
-			(float)corners[3][2] - (float)0.0001 };
+			(float)corners[3][0], (float)corners[3][1], (float)corners[3][2] };
 		Vector3 P1{ rl::Vector3RotateByAxisAngle(P1_, x_axis, axis_rotation) };
 		Vector3 P2{ rl::Vector3RotateByAxisAngle(P2_, x_axis, axis_rotation) };
 		Vector3 P3{ rl::Vector3RotateByAxisAngle(P3_, x_axis, axis_rotation) };
@@ -299,17 +351,13 @@ void Viewer::drawD()
 	{
 		std::array<nc::NdArray<double>, 4> corners = p.getCorners();
 		Vector3 P1_{
-			(float)corners[0][0], (float)corners[0][1],
-			(float)corners[0][2] - (float)0.0001 };
+			(float)corners[0][0], (float)corners[0][1], (float)corners[0][2] };
 		Vector3 P2_{
-			(float)corners[1][0], (float)corners[1][1],
-			(float)corners[1][2] - (float)0.0001 };
+			(float)corners[1][0], (float)corners[1][1], (float)corners[1][2] };
 		Vector3 P3_{
-			(float)corners[2][0], (float)corners[2][1],
-			(float)corners[2][2] - (float)0.0001 };
+			(float)corners[2][0], (float)corners[2][1], (float)corners[2][2] };
 		Vector3 P4_{
-			(float)corners[3][0], (float)corners[3][1],
-			(float)corners[3][2] - (float)0.0001 };
+			(float)corners[3][0], (float)corners[3][1], (float)corners[3][2] };
 		Vector3 P1{ rl::Vector3RotateByAxisAngle(P1_, x_axis, axis_rotation) };
 		Vector3 P2{ rl::Vector3RotateByAxisAngle(P2_, x_axis, axis_rotation) };
 		Vector3 P3{ rl::Vector3RotateByAxisAngle(P3_, x_axis, axis_rotation) };
@@ -340,24 +388,20 @@ void Viewer::drawWind()
 	{
 		std::array<nc::NdArray<double>, 4> corners = p.getCorners();
 		Vector3 P1_{
-			(float)corners[0][0], (float)corners[0][1],
-			(float)corners[0][2] - (float)0.0001 };
+			(float)corners[0][0], (float)corners[0][1], (float)corners[0][2] };
 		Vector3 P2_{
-			(float)corners[1][0], (float)corners[1][1],
-			(float)corners[1][2] - (float)0.0001 };
+			(float)corners[1][0], (float)corners[1][1], (float)corners[1][2] };
 		Vector3 P3_{
-			(float)corners[2][0], (float)corners[2][1],
-			(float)corners[2][2] - (float)0.0001 };
+			(float)corners[2][0], (float)corners[2][1], (float)corners[2][2] };
 		Vector3 P4_{
-			(float)corners[3][0], (float)corners[3][1],
-			(float)corners[3][2] - (float)0.0001 };
+			(float)corners[3][0], (float)corners[3][1], (float)corners[3][2] };
 		Vector3 P1{ rl::Vector3RotateByAxisAngle(P1_, x_axis, axis_rotation) };
 		Vector3 P2{ rl::Vector3RotateByAxisAngle(P2_, x_axis, axis_rotation) };
 		Vector3 P3{ rl::Vector3RotateByAxisAngle(P3_, x_axis, axis_rotation) };
 		Vector3 P4{ rl::Vector3RotateByAxisAngle(P4_, x_axis, axis_rotation) };
 
 		double w_ind = p.w_ind;
-		double dL_ratio = utils::lerp2D(
+		double dL_ratio = 1 - utils::lerp2D(
 			w_ind, panelData.wmin, panelData.wmax, (double)0, (double)1);
 
 		utils::colourMap::Colour colour =
