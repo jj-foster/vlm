@@ -3,9 +3,9 @@
 ### TODO:
 
 - vlm
-	- alpha range
 	- ring vortex
 		- wake generation
+	- alpha range
 
 - viewer
 	- draw wake
