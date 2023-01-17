@@ -1,4 +1,4 @@
-#include <pch.h>
+﻿#include <pch.h>
 
 #include <vlm.hpp>
 
@@ -107,16 +107,34 @@ void Vlm::runHorseshoe(double Qinf, double alpha, double beta, double atmosphere
 		}
 	};
 
-	int N{ plane->mesh->nPanels };
+	const int N{ plane->mesh->nPanels };
 	nc::NdArray<double> a = nc::zeros<double>(N, N);
 	nc::NdArray<double> b = nc::zeros<double>(N, N);
 	nc::NdArray<double> RHS = nc::zeros<double>(N, 1);
 
+	// Progress bar setup
+	indicators::show_console_cursor(false);
+
+	indicators::ProgressBar bar{
+		indicators::option::BarWidth{30},
+		indicators::option::Start{" ["},
+		indicators::option::Fill{"#"},
+		indicators::option::Lead{"#"},
+		indicators::option::Remainder{"-"},
+		indicators::option::End{"]"},
+		indicators::option::PrefixText{"Computing influence matrix"},
+		indicators::option::ForegroundColor{indicators::Color::white},
+		indicators::option::ShowElapsedTime{true},
+		indicators::option::ShowRemainingTime{true},
+		indicators::option::FontStyles{
+			std::vector<indicators::FontStyle>{indicators::FontStyle::bold}}
+	};
+
 	// Collocation point loop
 	int i{ 0 };
+	float progress{ 0.0f };
 	for (Panel& p0 : *plane->mesh)
 	{	
-		// std::cout << i << '\n';
 		RHS(0, i) = nc::dot(-Qinf_vec, p0.normal)[0];
 
 		double x{ p0.cp(0,0) };
@@ -170,13 +188,22 @@ void Vlm::runHorseshoe(double Qinf, double alpha, double beta, double atmosphere
 		}
 
 		i++;
+		if ((float)i/N >= progress) {
+			progress += (1.0f / 30.0f);
+			bar.set_progress(progress*100);
+		}
+		
 	}
+	indicators::show_console_cursor(true);
 
+	std::cout << "Solving influence matrix..." << '\n';
 	nc::NdArray<double> vorticity{ nc::linalg::solve(a,RHS) };
 	nc::NdArray<double> w_ind{ nc::matmul(b,vorticity) };
 
 	// Aero force computation
 	int k{ 0 };
+	double L{ 0 };
+	double Di{ 0 };
 	for (Panel& p : *plane->mesh)
 	{
 		p.vorticity = vorticity[k];
@@ -185,27 +212,12 @@ void Vlm::runHorseshoe(double Qinf, double alpha, double beta, double atmosphere
 		p.dL = rho * this->Qinf * vorticity(k, 0) * p.dy;
 		p.dDi = -rho * w_ind(k, 0) * vorticity(k, 0) * p.dy;
 
+		L += p.dL;
+		Di += p.dDi;
+
 		k++;
 	}
 
-}
-
-double Vlm::getCL()
-{
-	double L{ 0 };
-	for (Panel& p : *plane->mesh) { L += p.dL; }
-
-	double CL{ L / (0.5 * rho * plane->S_ref * std::pow(Qinf,2)) };
-
-	return CL;
-}
-
-double Vlm::getCDi()
-{
-	double Di{ 0 };
-	for (Panel& p : *plane->mesh) { Di += p.dDi; }
-
-	double CDi{ Di / (0.5 * rho * plane->S_ref * std::pow(Qinf,2)) };
-
-	return CDi;
+	CL = L / (0.5 * rho * plane->S_ref * std::pow(Qinf, 2));
+	CDi = Di / (0.5 * rho * plane->S_ref * std::pow(Qinf, 2));
 }

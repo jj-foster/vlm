@@ -25,13 +25,12 @@ private:
 	);
 
 public:
+	double CL{ 0 };
+	double CDi{ 0 };
 
 	Vlm(Plane* plane);
 
 	void runHorseshoe(double Qinf, double alpha, double beta, double atmosphereDensity);
 	void runRing();
-
-	double getCL();
-	double getCDi();
 
 };
