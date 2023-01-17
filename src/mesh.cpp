@@ -3,6 +3,8 @@
 #include <mesh.hpp>
 #include <panel.hpp>
 
+using rl::Vector3;
+
 void Mesh::generate(Wing* wing)
 {
     calc_points(wing);
@@ -140,10 +142,10 @@ MultiMesh::MultiMesh(std::vector<std::shared_ptr<Mesh>> meshes)
 
 }
 
-const std::vector<std::array<rl::Vector3, 2>> MultiMesh::getRlLines()
+const std::vector<std::array<Vector3, 2>> MultiMesh::getRlLines()
 {
     const int line_size = nPanels * 4;
-    std::vector<std::array<rl::Vector3,2>> lines(line_size);
+    std::vector<std::array<Vector3,2>> lines(line_size);
 
     int i{ 0 };
     for (auto it = this->begin(); it !=this->end(); it++)
@@ -151,10 +153,10 @@ const std::vector<std::array<rl::Vector3, 2>> MultiMesh::getRlLines()
         const Panel& currentPanel = *it;
         std::array<nc::NdArray<double>, 4> corners{ currentPanel.getCorners() };
 
-        rl::Vector3 P1_rl{ (float)corners[0][0],(float)corners[0][1],(float)corners[0][2] };
-        rl::Vector3 P2_rl{ (float)corners[1][0],(float)corners[1][1],(float)corners[1][2] };
-        rl::Vector3 P3_rl{ (float)corners[2][0],(float)corners[2][1],(float)corners[2][2] };
-        rl::Vector3 P4_rl{ (float)corners[3][0],(float)corners[3][1],(float)corners[3][2] };
+        Vector3 P1_rl{ (float)corners[0][0],(float)corners[0][1],(float)corners[0][2] };
+        Vector3 P2_rl{ (float)corners[1][0],(float)corners[1][1],(float)corners[1][2] };
+        Vector3 P3_rl{ (float)corners[2][0],(float)corners[2][1],(float)corners[2][2] };
+        Vector3 P4_rl{ (float)corners[3][0],(float)corners[3][1],(float)corners[3][2] };
 
         lines[i] = { P1_rl, P2_rl };
         lines[i+1] = { P2_rl, P3_rl };

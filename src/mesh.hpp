@@ -5,6 +5,9 @@
 #include <panel.hpp>
 #include <plane.hpp>
 
+using rl::Vector3;
+
+
 class Wing;
 
 /// <summary>

@@ -2,37 +2,68 @@
 #include <pch.h>
 
 #include <mesh.hpp>
+#include <utils/colourmap.hpp>
+
+using rl::Vector3;
 
 class Viewer
 {
 private:
-	const int screenWidth{ 800 };
-	const int screenHeight{ 500 };
+	int screenWidth{ 800 };
+	int screenHeight{ 500 };
 	const bool showCp;
 	const bool showNormals;
 
-	const rl::Vector3 x_axis{ 1,0,0 };
-	const float axis_rotation{ (double)(- nc::constants::pi / 2) };
+	utils::colourMap::CmType cmType = utils::colourMap::CmType::Jet;
 
-	MultiMesh* currentMesh;
-	const std::vector<std::array<rl::Vector3, 2>> currentMeshLines;
+	enum class AeroVis {
+		mesh, lift, drag, downwash
+	};
+
+	AeroVis aeroVis{ AeroVis::lift };
+
+	struct PanelData
+	{
+		double Lmax;
+		double Lmin;
+		double Dmax;
+		double Dmin;
+		double wmax;
+		double wmin;
+
+		PanelData(MultiMesh* mesh);
+	};
+
+	PanelData panelData;
+
+	const Vector3 x_axis{ 1,0,0 };
+	const float axis_rotation{ (float)(- nc::constants::pi / 2) };
+
+	MultiMesh* mesh;
+	const std::vector<std::array<Vector3, 2>> meshLines;
 
 	void startWindow();
-	void drawMesh(MultiMesh* mesh, rl::Camera camera);
+
+	void drawMesh();
+	void drawL();
+	void drawD();
+	void drawWind();
+
 
 public:
 	std::atomic<bool> running;
 
 	Viewer(MultiMesh* mesh, bool showCp = true, bool showNormals = false)
 		: running{ true }
-		, currentMesh{ mesh }
+		, mesh{ mesh }
 		, showCp{ showCp }
 		, showNormals{ showNormals }
-		, currentMeshLines{ currentMesh->getRlLines() }
+		, meshLines{ mesh->getRlLines() }
+		, panelData{ mesh }
 	{
+		
 	};
 
 	void startWindowThreadDetached();
 	void startWindowThreadJoined();
-	void setCurrentMesh(MultiMesh* mesh);
 };

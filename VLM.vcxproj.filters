@@ -1562,13 +1562,19 @@
     <ClInclude Include="src\aerofoil.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\utils.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\viewer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\vlm.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\utils\algorithms.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\utils\colourmap.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\raygui.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

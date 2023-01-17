@@ -26,8 +26,8 @@
 
 #include <nlohmann/json.hpp>
 
-namespace rl
-{ 
+namespace rl {
 #include <raylib.h>
 #include <raymath.h>
+
 }
