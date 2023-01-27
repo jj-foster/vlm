@@ -5,11 +5,21 @@
 ### TODO:
 
 - vlm
-	- ring vortex
-		- wake generation
+	- ring vortex:
+	- wake object
+		- time stepping growth
+		- rollup
+		- attached to a wing object - grows from trailing edge
+	- wake-body influence calculation & AX=B solver
+
 	- alpha range
+	- lifting line warning if aerofoil is not flat
+
+- mesh
+	- sin and cos bunching for span and chord panels
 
 - viewer
 	- draw wake
+	- font
 
 - plane .json input screening
