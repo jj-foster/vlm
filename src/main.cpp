@@ -34,7 +34,10 @@ int main()
     double rho{ 1.225 };
 
     auto start{ std::chrono::high_resolution_clock::now() };
-    vlm.runHorseshoe(Qinf, alpha, beta, rho);
+    //vlm.runLiftingLine(Qinf, alpha, beta, rho);
+    vlm.runLiftingSurface(Qinf, alpha, beta, rho, 1);
+    exit(0);
+
     auto stop{ std::chrono::high_resolution_clock::now() };
 
     std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(stop - start) << '\n';

@@ -45,14 +45,11 @@ void Panel::calc_area() {
 /// </summary>
 void Panel::calc_cp() {
 
-    double side_in_norm = nc::norm(P4-P1)[0];
-    double side_out_norm = nc::norm(P3-P2)[0];
+    nc::NdArray<double> trailing_vec = 0.75 * (P4 - P1);
+    nc::NdArray<double> bound_vec = 0.75 * (P3 - P2);
 
-    nc::NdArray<double> side_in_vec = 0.75 * (P4 - P1);
-    nc::NdArray<double> side_out_vec = 0.75 * (P4 - P1);
-
-    auto _P1 = P1 + side_in_vec;
-    auto _P2 = P2 + side_out_vec;
+    auto _P1 = P1 + trailing_vec;
+    auto _P2 = P2 + bound_vec;
 
     auto _P12 = _P2 - _P1;
 
@@ -62,14 +59,12 @@ void Panel::calc_cp() {
 
 void Panel::calc_bound_vortex() {
 
-    double side_in_norm = nc::norm(P4 - P1)[0];
-    double side_out_norm = nc::norm(P3 - P2)[0];
+    nc::NdArray<double> trailing_vec = 0.25 * (P4 - P1);
 
-    nc::NdArray<double> side_in_vec = 0.25 * (P4 - P1);
-    nc::NdArray<double> side_out_vec = 0.25 * (P4 - P1);
-
-    B = P1 + side_in_vec;
-    C = P2 + side_in_vec;
+    A = P4 + trailing_vec;
+    B = P1 + trailing_vec;
+    C = P2 + trailing_vec;
+    D = P3 + trailing_vec;
 }
 
 void Panel::calc_normal() {

@@ -2,6 +2,19 @@
 
 #include <pch.h>
 
+/// Panel coordinates:
+///      P1--P2->y
+///      :   :
+///      P4--P3
+///      |
+///      x
+/// 
+/// Vortex coordinates:
+///     B--C->y
+///     :  :
+///     A--D
+///     |
+///     x
 class Panel {
 private:
     nc::NdArray<double> P1;
@@ -14,15 +27,26 @@ private:
 public:
     double area;
     nc::NdArray<double> cp;
-    nc::NdArray<double> B;
-    nc::NdArray<double> C;
+
+    // Relative to panel centre:
+    nc::NdArray<double> A;  // +x, -y
+    nc::NdArray<double> B;  // -x, -y
+    nc::NdArray<double> C;  // -x, +y
+    nc::NdArray<double> D;  // +x, +y
+
+    // Therefore:
+    //  AB = trailing vortex inboard,
+    //  BC = bound vortex,
+    //  CD = trailing vortex outboard,
+    //  DA = starting vortex.
+
     nc::NdArray<double> normal;
 
-    double dy;      // span
-    double vorticity{ 0 };   // induced vorticity
-    double dL{ 0 };      // induced lift
-    double w_ind{ 0 };   // induced velocity
-    double dDi{ 0 };      // induced drag
+    double dy;              // span
+    double vorticity{ 0 };  // induced vorticity
+    double dL{ 0 };         // induced lift
+    double w_ind{ 0 };      // induced velocity
+    double dDi{ 0 };        // induced drag
 
     Panel(
         nc::NdArray<double> P1,
