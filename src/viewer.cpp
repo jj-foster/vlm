@@ -2,6 +2,7 @@
 
 #include <viewer.hpp>
 #include <mesh.hpp>
+#include <vlm.hpp>
 #include <utils/algorithms.hpp>
 #include <utils/colourmap.hpp>
 
@@ -100,6 +101,10 @@ void Viewer::startWindow()
 					default: break;
 					}
 
+					if ((*vlm).solverType == Vlm::SolverType::lifting_surface) {
+						drawWake();
+					}
+
 					// Draw axes
 					distCamera = rl::Vector3Length(
 						rl::Vector3Subtract(camera.position, origin)) * ax_scale;
@@ -123,7 +128,7 @@ void Viewer::startWindow()
 			{
 			case AeroVis::mesh: type_str = "Mesh"; break;
 			case AeroVis::lift: type_str = "Lift"; break;
-			case AeroVis::drag: type_str = "Drag"; break;
+			case AeroVis::drag: type_str = "Induced Drag"; break;
 			case AeroVis::downwash: type_str = "Downwash"; break;
 			}
 			rl::DrawText(type_str.c_str(), 10, 10, 25, rl::WHITE);
@@ -145,7 +150,7 @@ void Viewer::startWindow()
 				10, screenHeight - 40, 18, rl::SKYBLUE
 			);
 			rl::DrawText(	// CD
-				("CD: " + std::to_string(vlm->CDi)).c_str(),
+				("CDi: " + std::to_string(vlm->CDi)).c_str(),
 				10, screenHeight - 20, 18, rl::SKYBLUE
 			);
 
@@ -416,5 +421,25 @@ void Viewer::drawWind()
 		rl::DrawTriangle3D(P3, P2, P1, colour_rl);
 		rl::DrawTriangle3D(P4, P3, P1, colour_rl);
 
+	}
+}
+
+void Viewer::drawWake()
+{
+	for (auto& wing : vlm->getPlane()->wings)
+	{
+		auto lines{ wing->wakes.back().get()->getRlLines()};
+
+		for (auto& line : lines)
+		{
+			Vector3 start_{ line[0] };
+			Vector3 end_{ line[1] };
+
+			Vector3 start{ rl::Vector3RotateByAxisAngle(start_, x_axis, axis_rotation) };
+			Vector3 end{ rl::Vector3RotateByAxisAngle(end_, x_axis, axis_rotation) };
+
+			rl::DrawLine3D(start, end, rl::SKYBLUE);
+		}
+		
 	}
 }

@@ -51,6 +51,7 @@ private:
 	void drawL();
 	void drawD();
 	void drawWind();
+	void drawWake();
 
 
 public:
