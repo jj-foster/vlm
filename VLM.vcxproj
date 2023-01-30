@@ -41,6 +41,7 @@
     <ClCompile Include="src\plane.cpp" />
     <ClCompile Include="src\viewer.cpp" />
     <ClCompile Include="src\vlm.cpp" />
+    <ClCompile Include="src\wake.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="includes\indicators.hpp" />
@@ -546,7 +547,6 @@
     <ClInclude Include="includes\NumCpp\Vector.hpp" />
     <ClInclude Include="includes\NumCpp\Vector\Vec2.hpp" />
     <ClInclude Include="includes\NumCpp\Vector\Vec3.hpp" />
-    <ClInclude Include="includes\raygui.h" />
     <ClInclude Include="includes\utils\algorithms.hpp" />
     <ClInclude Include="includes\utils\colourmap.hpp" />
     <ClInclude Include="src\aerofoil.hpp" />
@@ -556,6 +556,7 @@
     <ClInclude Include="src\plane.hpp" />
     <ClInclude Include="src\viewer.hpp" />
     <ClInclude Include="src\vlm.hpp" />
+    <ClInclude Include="src\wake.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="resources\fonts\Segoe UI.ttf" />

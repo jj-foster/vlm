@@ -1,6 +1,7 @@
 ﻿#include <pch.h>
 
 #include <vlm.hpp>
+#include <viewer.hpp>
 
 Vlm::Vlm(Plane* plane)
 	: plane{ plane }
@@ -11,7 +12,7 @@ Vlm::Vlm(Plane* plane)
 // Calculates induced velocity on a point due to a line vortex element.
 std::array<double,3> Vlm::lineVortex(
 	double x, double y, double z, double x1, double y1, double z1,
-	double x2, double y2, double z2, double vorticity, double R
+	double x2, double y2, double z2, double vorticity, double r
 )
 {
 	std::array<double, 3> inducedVelocity{ 0,0,0 };
@@ -29,7 +30,7 @@ std::array<double,3> Vlm::lineVortex(
 
 	// Singularity condition:
 	// If point lies on vortex, induced velocities = 0
-	if (r1_mod < R || r2_mod < R || r1x2_mod2 < R)
+	if (r1_mod < r || r2_mod < r || r1x2_mod2 < r)
 	{
 		return inducedVelocity;
 	}
@@ -54,13 +55,13 @@ std::array<double,3> Vlm::lineVortex(
 std::array<std::array<double, 3>, 2> Vlm::horseshoeVortex(
 	double x, double y, double z, double xA, double yA, double zA,
 	double xB, double yB, double zB, double xC, double yC, double zC,
-	double xD, double yD, double zD, double vorticity, double R
+	double xD, double yD, double zD, double vorticity, double r
 )
 {
 	// Induced velocities by each line vortex in the trailing vortex
-	std::array<double, 3> q1{ lineVortex(x,y,z,xA,yA,zA,xB,yB,zB,vorticity,R) };
-	std::array<double, 3> q2{ lineVortex(x,y,z,xB,yB,zB,xC,yC,zC,vorticity,R) };
-	std::array<double, 3> q3{ lineVortex(x,y,z,xC,yC,zC,xD,yD,zD,vorticity,R) };
+	std::array<double, 3> q1{ lineVortex(x,y,z,xA,yA,zA,xB,yB,zB,vorticity,r) };
+	std::array<double, 3> q2{ lineVortex(x,y,z,xB,yB,zB,xC,yC,zC,vorticity,r) };
+	std::array<double, 3> q3{ lineVortex(x,y,z,xC,yC,zC,xD,yD,zD,vorticity,r) };
 
 	// Induced velocity by horseshoe vortex on point P
 	std::array<double, 3> q{
@@ -82,14 +83,14 @@ std::array<std::array<double, 3>, 2> Vlm::horseshoeVortex(
 std::array<std::array < double, 3>, 2> Vlm::ringVortex(
 	double x, double y, double z, double xA, double yA, double zA,
 	double xB, double yB, double zB, double xC, double yC, double zC,
-	double xD, double yD, double zD, double vorticity, double R
+	double xD, double yD, double zD, double vorticity, double r
 )
 {
 	// Induced velocities by each line vortex in the ring
-	std::array<double, 3> q1{ lineVortex(x,y,z,xA,yA,zA,xB,yB,zB,vorticity,R) };
-	std::array<double, 3> q2{ lineVortex(x,y,z,xB,yB,zB,xC,yC,zC,vorticity,R) };
-	std::array<double, 3> q3{ lineVortex(x,y,z,xC,yC,zC,xD,yD,zD,vorticity,R) };
-	std::array<double, 3> q4{ lineVortex(x,y,z,xD,yD,zD,xA,yA,zA,vorticity,R) };
+	std::array<double, 3> q1{ lineVortex(x,y,z,xA,yA,zA,xB,yB,zB,vorticity,r) };
+	std::array<double, 3> q2{ lineVortex(x,y,z,xB,yB,zB,xC,yC,zC,vorticity,r) };
+	std::array<double, 3> q3{ lineVortex(x,y,z,xC,yC,zC,xD,yD,zD,vorticity,r) };
+	std::array<double, 3> q4{ lineVortex(x,y,z,xD,yD,zD,xA,yA,zA,vorticity,r) };
 
 	// Induced velocity by ring vortex on point P
 	std::array<double, 3> q{
@@ -196,11 +197,11 @@ void Vlm::runLiftingLine(double Qinf, double alpha, double beta, double atmosphe
 			double zD{ xD * nc::sin(alpha_rad) };
 
 			std::array<std::array<double, 3>, 2> Uind{
-				horseshoeVortex(x,y,z,xA,yA,zA,xB,yB,zB,xC,yC,zC,xD,yD,zD,1,R)
+				horseshoeVortex(x,y,z,xA,yA,zA,xB,yB,zB,xC,yC,zC,xD,yD,zD,1,r)
 			};
 
 			std::array<std::array<double, 3>, 2> Uind_mirror{
-				horseshoeVortex(x,-y,z,xA,yA,zA,xB,yB,zB,xC,yC,zC,xD,yD,zD,1,R)
+				horseshoeVortex(x,-y,z,xA,yA,zA,xB,yB,zB,xC,yC,zC,xD,yD,zD,1,r)
 			};
 
 			nc::NdArray<double> q{
@@ -260,10 +261,6 @@ void Vlm::runLiftingSurface(
 {
 	solverType = SolverType::lifting_surface;
 
-	if (wakeIterations < 1) {
-		throw std::invalid_argument("Cannot have fewer than 1 wake iterations.");
-	}
-
 	this->Qinf = Qinf;
 	rho = atmosphereDensity;
 	double alpha_rad{ nc::deg2rad(alpha) };
@@ -284,7 +281,6 @@ void Vlm::runLiftingSurface(
 	const int N{ plane->mesh->nPanels };
 	nc::NdArray<double> a_body = nc::zeros<double>(N, N);
 	nc::NdArray<double> b = nc::zeros<double>(N, N);
-	nc::NdArray<double> RHS = nc::zeros<double>(N, 1);
 
 	// Progress bar setup
 	indicators::show_console_cursor(false);
@@ -309,8 +305,6 @@ void Vlm::runLiftingSurface(
 	float progress{ 0.0f };
 	for (Panel& p0 : *plane->mesh)
 	{
-		RHS(0, i) = nc::dot(-Qinf_vec, p0.normal)[0];
-
 		double x{ p0.cp(0,0) };
 		double y{ p0.cp(0,1) };
 		double z{ p0.cp(0,2) };
@@ -336,11 +330,11 @@ void Vlm::runLiftingSurface(
 			double zD{ p1.D(0,2) };
 
 			std::array<std::array<double, 3>, 2> Uind{
-				ringVortex(x,y,z,xA,yA,zA,xB,yB,zB,xC,yC,zC,xD,yD,zD,1,R)
+				ringVortex(x,y,z,xA,yA,zA,xB,yB,zB,xC,yC,zC,xD,yD,zD,1,r)
 			};
 
 			std::array<std::array<double, 3>, 2> Uind_mirror{
-				ringVortex(x,-y,z,xA,yA,zA,xB,yB,zB,xC,yC,zC,xD,yD,zD,1,R)
+				ringVortex(x,-y,z,xA,yA,zA,xB,yB,zB,xC,yC,zC,xD,yD,zD,1,r)
 			};
 
 			nc::NdArray<double> q{
@@ -368,11 +362,319 @@ void Vlm::runLiftingSurface(
 
 	}
 	indicators::show_console_cursor(true);
+	std::cout << '\n';
+
+	// Initial wake generation
+	for (auto& wing : plane->wings) {
+		auto& wakes{ wing.get()->wakes };
+
+		wakes.push_back(std::make_shared<Wake>(wing.get()));
+		
+	}
+
+	const double dt{ K };// *(plane->c_ref / Qinf)
 
 
 	// TIME-STEPPING LOOP
-	//		wake influence coefficients
-	//		wake relaxation
-	//		solve for R
 
+	indicators::show_console_cursor(false);
+	indicators::ProgressBar bar1{
+		indicators::option::BarWidth{30},
+		indicators::option::Start{" ["},
+		indicators::option::Fill{"#"},
+		indicators::option::Lead{"#"},
+		indicators::option::Remainder{"-"},
+		indicators::option::End{"]"},
+		indicators::option::PrefixText{"Solving wake influence"},
+		indicators::option::ForegroundColor{indicators::Color::white},
+		indicators::option::ShowElapsedTime{true},
+		indicators::option::ShowRemainingTime{true},
+		indicators::option::FontStyles{
+			std::vector<indicators::FontStyle>{indicators::FontStyle::bold}}
+	};
+	for (int wakeIteration{ 0 }; wakeIteration != wakeIterations + 1; wakeIteration++)
+	{
+		nc::NdArray<double> RHS = nc::zeros<double>(N, 1);
+
+		// Progress wake
+		if (wakeIteration != 0)
+		{
+			for (auto& wing : plane->wings)
+			{
+				// Progress wake
+				wing->wakes.push_back(std::make_shared<Wake>(*wing->wakes.back()));
+				wing->wakes.back()->timeStep(0.3*wing.get()->sections[0].chord);
+			}
+		}
+		
+		int i{ 0 };
+		// Construct RHS: wake and freestream influence velocity
+		for (Panel& panel : *plane->mesh)
+		{
+			double x{ panel.cp(0,0) };
+			double y{ panel.cp(0,1) };
+			double z{ panel.cp(0,2) };
+
+			nc::NdArray<double> q_wake{ 0,0,0 };
+			if (wakeIteration!=0)
+			{
+				// Wake induced velocity = sum of ring vortex induced velocity in wake
+				q_wake = { 0,0,0 };
+
+				for (auto& wing : plane->wings)
+				{
+					auto& wakes{ wing.get()->wakes };
+
+					const std::vector<std::vector<std::array<double, 3>>> points{
+						wakes.back()->points
+					};
+					const std::vector<std::vector<double>> vorticities{
+						wakes.back()->vorticities
+					};
+
+					// Wake induced velocity loop
+					// ring vortex is breaking because of proximity condition
+					for (int r_count{ 1 }; r_count!=points.size(); r_count++)
+					{
+						for (int p_count{ 1 }; p_count != points[r_count].size(); p_count++)
+						{
+							double xA{ points[r_count][p_count - 1][0] };
+							double yA{ points[r_count][p_count - 1][1] };
+							double zA{ points[r_count][p_count - 1][2] };
+
+							double xB{ points[r_count - 1][p_count - 1][0] };
+							double yB{ points[r_count - 1][p_count - 1][1] };
+							double zB{ points[r_count - 1][p_count - 1][2] };
+
+							double xC{ points[r_count - 1][p_count][0] };
+							double yC{ points[r_count - 1][p_count][1] };
+							double zC{ points[r_count - 1][p_count][2] };
+
+							double xD{ points[r_count][p_count][0] };
+							double yD{ points[r_count][p_count][1] };
+							double zD{ points[r_count][p_count][2] };
+
+							std::array<std::array<double, 3>, 2> Uind_wake{
+								ringVortex(x,y,z,xA,yA,zA,xB,yB,zB,xC,yC,zC,
+									xD,yD,zD,vorticities[r_count - 1][p_count - 1],this->r)
+							};
+
+							std::array<std::array<double, 3>, 2> Uind_mirror_wake{
+								ringVortex(x,-y,z,xA,yA,zA,xB,yB,zB,xC,yC,zC,
+									xD,yD,zD,vorticities[r_count - 1][p_count - 1],this->r)
+							};
+
+							nc::NdArray<double> q{
+								Uind_wake[0][0] + Uind_mirror_wake[0][0],
+								Uind_wake[0][1] - Uind_mirror_wake[0][1],
+								Uind_wake[0][2] + Uind_mirror_wake[0][2]
+							};
+							nc::NdArray<double> q_{
+								Uind_wake[1][0] + Uind_mirror_wake[1][0],
+								Uind_wake[1][1] - Uind_mirror_wake[1][1],
+								Uind_wake[1][2] + Uind_mirror_wake[1][2]
+							};
+
+							q_wake += q;
+
+						}
+					}
+				}
+			}
+
+			nc::NdArray<double> vel_influence{
+				Qinf_vec[0] + q_wake[0],
+				Qinf_vec[1] + q_wake[1],
+				Qinf_vec[2] + q_wake[2]
+			};
+
+			RHS(0, i) = nc::dot(-vel_influence, panel.normal)[0];
+			i++;
+
+
+		}
+
+		// Solve for R
+		nc::NdArray<double> vorticity{ nc::linalg::solve(a_body,RHS) };
+		nc::NdArray<double> w_ind{ nc::matmul(b,vorticity) };
+
+		int k{ 0 };
+		double L{ 0 };
+		double Di{ 0 };
+
+		// Compute panel forces
+		for (auto& wing : plane->wings)
+		{
+			auto& panels{ wing.get()->getMesh().get()->getPanels() };
+
+			for (int c{ 0 }; c != wing.get()->n; c++)
+			{
+				for (int s{ 0 }; s != wing.get()->m_sum; s++)
+				{
+					int k_{ k + (c * wing.get()->n) + s };
+					int k__{ k + ((c-1) * wing.get()->n) + s };
+
+					Panel& p{ panels[k_] };
+
+					p.vorticity = vorticity[k_];					
+					p.w_ind = w_ind(k_, 0);
+
+					if (c == 0)
+					{
+						p.dL = rho * this->Qinf * vorticity(k_, 0) * p.dy;
+						p.dDi = -rho * w_ind(k_, 0) * vorticity(k_, 0) * p.dy;
+					}
+					else
+					{
+						p.dL = rho * this->Qinf 
+							* (vorticity(k_, 0)-vorticity(k__,0)) * p.dy;
+						p.dDi = -rho * w_ind(k_, 0) 
+							* (vorticity(k_, 0) - vorticity(k__, 0)) * p.dy;
+					}
+
+					L += p.dL;
+					Di += p.dDi;
+				}
+			}
+
+			k += panels.size() - 1;
+		}
+
+		//DEBUG
+		//std::cout << plane->wings[0].get()->getMesh().get()->getPanels()[0].vorticity << '\n';
+
+		CL = L / (0.5 * rho * plane->S_ref * std::pow(Qinf, 2));
+		CDi = Di / (0.5 * rho * plane->S_ref * std::pow(Qinf, 2));
+
+		// Wake rollup
+		for (auto& wing : plane->wings)
+		{
+			for (auto& row : wing.get()->wakes.back().get()->points)
+			{
+				if (row == wing.get()->wakes.back().get()->points.front()
+					&& wakeIteration == wakeIterations)
+				{
+					continue;
+				}
+
+				for (auto& point : row)
+				{
+					double x{ point[0] };
+					double y{ point[1] };
+					double z{ point[2] };
+
+					nc::NdArray<double> q_body{ 0,0,0 };
+					nc::NdArray<double> q_wake{ 0,0,0 };
+
+					// Body influence
+					for (Panel& p1 : *plane->mesh)
+					{
+						double xA{ p1.A(0,0) };
+						double yA{ p1.A(0,1) };
+						double zA{ p1.A(0,2) };
+
+						double xB{ p1.B(0,0) };
+						double yB{ p1.B(0,1) };
+						double zB{ p1.B(0,2) };
+
+						double xC{ p1.C(0,0) };
+						double yC{ p1.C(0,1) };
+						double zC{ p1.C(0,2) };
+
+						double xD{ p1.D(0,0) };
+						double yD{ p1.D(0,1) };
+						double zD{ p1.D(0,2) };
+
+						std::array<std::array<double, 3>, 2> Uind{
+							ringVortex(x,y,z,xA,yA,zA,xB,yB,zB,xC,yC,zC,xD,yD,zD,p1.vorticity,r)
+						};
+
+						std::array<std::array<double, 3>, 2> Uind_mirror{
+							ringVortex(x,-y,z,xA,yA,zA,xB,yB,zB,xC,yC,zC,xD,yD,zD,p1.vorticity,r)
+						};
+
+						nc::NdArray<double> q{
+							Uind[0][0] + Uind_mirror[0][0],
+							Uind[0][1] - Uind_mirror[0][1],
+							Uind[0][2] + Uind_mirror[0][2]
+						};
+
+						q_body += q;
+					}
+
+					// Wake influence
+					for (auto& wing : plane->wings)
+					{
+						auto& wakes{ wing.get()->wakes };
+
+						const std::vector<std::vector<std::array<double, 3>>> points{
+							wakes.back()->points
+						};
+
+						const std::vector<std::vector<double>> vorticities{
+							wakes.back()->vorticities
+						};
+
+						// Wake induced velocity loop
+						for (int r_count{ 1 }; r_count != points.size(); r_count++)
+						{
+							for (int p_count{ 1 }; p_count != points[r_count].size(); p_count++)
+							{
+								double xA{ points[r_count][p_count - 1][0] };
+								double yA{ points[r_count][p_count - 1][1] };
+								double zA{ points[r_count][p_count - 1][2] };
+
+								double xB{ points[r_count - 1][p_count - 1][0] };
+								double yB{ points[r_count - 1][p_count - 1][1] };
+								double zB{ points[r_count - 1][p_count - 1][2] };
+
+								double xC{ points[r_count - 1][p_count][0] };
+								double yC{ points[r_count - 1][p_count][1] };
+								double zC{ points[r_count - 1][p_count][2] };
+
+								double xD{ points[r_count][p_count][0] };
+								double yD{ points[r_count][p_count][1] };
+								double zD{ points[r_count][p_count][2] };
+
+								std::array<std::array<double, 3>, 2> Uind_wake{
+									ringVortex(x,y,z,xA,yA,zA,xB,yB,zB,xC,yC,zC,
+									xD,yD,zD,vorticities[r_count-1][p_count-1],this->r)
+								};
+
+								std::array<std::array<double, 3>, 2> Uind_mirror_wake{
+									ringVortex(x,-y,z,xA,yA,zA,xB,yB,zB,xC,yC,zC,
+									xD,yD,zD,vorticities[r_count-1][p_count-1],this->r)
+								};
+
+								nc::NdArray<double> q{
+									Uind_wake[0][0] + Uind_mirror_wake[0][0],
+									Uind_wake[0][1] - Uind_mirror_wake[0][1],
+									Uind_wake[0][2] + Uind_mirror_wake[0][2]
+								};
+
+								q_wake += q;
+							}
+						}
+					}
+
+					nc::NdArray<double> q = q_body + q_wake;
+					
+					point[0] += q[0] * dt;
+					point[1] += q[1] * dt;
+					point[2] += q[2] * dt;
+
+				}
+			}
+		}
+
+
+		//Viewer window{this, false, false };
+		//window.startWindowThreadJoined();
+	
+		progress = (float)wakeIteration / wakeIterations;
+		bar1.set_progress(progress * 100);
+	}
+
+	indicators::show_console_cursor(true);
+	std::cout << '\n';
 }

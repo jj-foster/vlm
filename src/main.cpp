@@ -28,22 +28,22 @@ int main()
 
     
     Vlm vlm{ &plane };
-    double Qinf{ 1 };
+    double Qinf{ 10 };
     double alpha{ 10 };
     double beta{ 0 };
     double rho{ 1.225 };
 
     auto start{ std::chrono::high_resolution_clock::now() };
     //vlm.runLiftingLine(Qinf, alpha, beta, rho);
-    vlm.runLiftingSurface(Qinf, alpha, beta, rho, 1);
-    exit(0);
+    vlm.runLiftingSurface(Qinf, alpha, beta, rho, 10);
+    //exit(0);
 
     auto stop{ std::chrono::high_resolution_clock::now() };
 
     std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(stop - start) << '\n';
 
-    std::cout << "CL: " << vlm.CL << '\n';
-    std::cout << "CDi: " << vlm.CDi << "\n\n";
+    // std::cout << "CL: " << vlm.CL << '\n';
+    // std::cout << "CDi: " << vlm.CDi << "\n\n";
 
     Viewer window{ &vlm, false, false };
     window.startWindowThreadJoined();

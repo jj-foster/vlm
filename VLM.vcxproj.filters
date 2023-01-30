@@ -39,6 +39,9 @@
     <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\wake.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\plane.hpp">
@@ -1574,10 +1577,10 @@
     <ClInclude Include="includes\utils\colourmap.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="includes\raygui.h">
+    <ClInclude Include="includes\indicators.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="includes\indicators.hpp">
+    <ClInclude Include="src\wake.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

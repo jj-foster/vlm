@@ -5,15 +5,10 @@
 ### TODO:
 
 - vlm
-	- ring vortex:
-	- wake object
-		- time stepping growth
-		- rollup
-		- attached to a wing object - grows from trailing edge
-	- wake-body influence calculation & AX=B solver
-
-	- alpha range
-	- lifting line warning if aerofoil is not flat
+	fix span/chord split error - only works properly with 10x10 wing
+	add freestream influence to wake rollup?
+	lift/drag distribution doesn't look right
+	generalise wake rollup parameters
 
 - mesh
 	- sin and cos bunching for span and chord panels
