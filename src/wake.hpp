@@ -11,16 +11,11 @@ class Wake
 {
 private:
 
-	int y{ 0 };	// number of ring vorticies in y
 	int x{ 0 };	// number of ring vorticies in x
+	int y{ 0 };	// number of ring vorticies in y
 
-	// list of rows of ring vortex corner coordinates. size=(x+1,y)
-	std::vector<std::vector<std::array<double, 3>>> points{ {} };
-
-	// list of rows of vorticities. size=(x,y)
-	std::vector<std::vector<double>> vorticities{ {} };
-
-	std::vector<Panel> TE_panels;
+	std::vector<Panel*> TE_panels;
+	std::vector<std::array<double, 3>> TE_points;
 
 public:
 
@@ -28,9 +23,11 @@ public:
 
 	void timeStep(double dt);
 
-	const std::vector<std::vector<std::array<double, 3>>> getPoints() const {
-		return points;
-	}
+	// list of rows of ring vortex corner coordinates. size=(x+1,y+1)
+	std::vector<std::vector<std::array<double, 3>>> points{ {} };
+
+	// list of rows of vorticities. size=(x,y)
+	std::vector<std::vector<double>> vorticities{ {} };
 
 	const std::vector<std::array<rl::Vector3, 2>> getRlLines() const;
 };

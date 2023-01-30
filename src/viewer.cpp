@@ -113,9 +113,9 @@ void Viewer::startWindow()
 					ax_x = rl::Vector3Multiply(Vector3{ 1,0,0 }, distCameraVec);
 					ax_y = rl::Vector3Multiply(Vector3{ 0,1,0 }, distCameraVec);
 					ax_z = rl::Vector3Multiply(Vector3{ 0,0,-1 }, distCameraVec);
-					rl::DrawLine3D(origin, ax_x, rl::PINK);
-					rl::DrawLine3D(origin, ax_y, rl::LIME);
-					rl::DrawLine3D(origin, ax_z, rl::SKYBLUE);
+					rl::DrawLine3D(origin, ax_x, rl::RED);
+					rl::DrawLine3D(origin, ax_y, rl::GREEN);
+					rl::DrawLine3D(origin, ax_z, rl::BLUE);
 
 				}
 			}

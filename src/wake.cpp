@@ -9,25 +9,39 @@ Wake::Wake(Wing* wing)
 {
 	int n{ wing->n };
 
-	Mesh* wing_mesh{ wing->getMesh().get()};
-	std::vector<Panel> wing_panels{ wing_mesh->getPanels() };
+	// std::vector<Panel>& wing_panels{ wing->getMesh().get()->getPanels()};
+	// TE_panels = std::vector<Panel>(wing_panels.end() - n,wing_panels.end());
 
-	TE_panels = { wing_panels.end() - n,wing_panels.end() };
+	std::vector<Panel*> wing_panels_ptr;
+	for (
+		int i{ (int)wing->getMesh().get()->getPanels().size() - n };
+		i < (int)wing->getMesh().get()->getPanels().size();
+		i++
+		)
+	{
+		wing_panels_ptr.push_back(&wing->getMesh().get()->getPanels()[i]);
+	}
+	TE_panels = wing_panels_ptr;
 
 	// Get trailing edge points
-	for (int i{ 0 }; i != TE_panels.size(); i++) {
+	for (int i{ 0 }; i != TE_panels.size(); i++)
+	{
 		// TE point at root of wing
 		if (i == 0) {
-			std::array<nc::NdArray<double>, 4> corners{ TE_panels[i].getCorners() };
-			points[0].push_back({ corners[3][0],corners[3][1], corners[3][2] });
+			points[0].push_back(
+				{ TE_panels[i]->A[0],TE_panels[i]->A[1], TE_panels[i]->A[2] }
+			);
 		}
 		
 		// Everything else
 
-		std::array<nc::NdArray<double>, 4> corners{ TE_panels[i].getCorners() };
-		points[0].push_back({ corners[2][0], corners[2][1], corners[2][2] });
+		points[0].push_back(
+			{ TE_panels[i]->D[0],TE_panels[i]->D[1], TE_panels[i]->D[2] }
+		);
 
 	}
+
+	TE_points = points[0];
 
 }
 
@@ -35,7 +49,7 @@ void Wake::timeStep(double dt)
 {
 	// Move wake vertices back by dt and insert new row at wing TE.
 
-	std::vector<std::array<double, 3>> new_row{ points[0] };
+	std::vector<std::array<double, 3>> new_row{ TE_points };
 	for (auto& row : points)
 	{
 		for (auto& coord : row)
@@ -49,12 +63,13 @@ void Wake::timeStep(double dt)
 
 	std::vector<double> new_vorticities;
 	for (auto& panel : TE_panels) {
-		new_vorticities.push_back(panel.vorticity);
+		new_vorticities.push_back(panel->vorticity);
 	}
 	vorticities.insert(vorticities.begin(), new_vorticities);
 
 	x++;
 
+	//std::cout << TE_panels[0]->vorticity << '\n';
 }
 
 const std::vector<std::array<rl::Vector3, 2>> Wake::getRlLines() const
