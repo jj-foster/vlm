@@ -28,6 +28,8 @@ public:
     double area;
     nc::NdArray<double> cp;
 
+    const bool leading_edge;
+
     // Relative to panel centre:
     nc::NdArray<double> A;  // +x, -y
     nc::NdArray<double> B;  // -x, -y
@@ -53,7 +55,8 @@ public:
         nc::NdArray<double> P2,
         nc::NdArray<double> P3,
         nc::NdArray<double> P4,
-        int id
+        int id,
+        bool leading_edge
     );
 
     void calc_area();

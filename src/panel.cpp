@@ -7,13 +7,15 @@ Panel::Panel(
     nc::NdArray<double> P2,
     nc::NdArray<double> P3,
     nc::NdArray<double> P4,
-    int id
+    int id,
+    bool leading_edge
 )
     : P1(P1),
     P2(P2),
     P3(P3),
     P4(P4),
-    id(id)
+    id(id),
+    leading_edge{leading_edge}
 {
     calc_area();
     calc_cp();

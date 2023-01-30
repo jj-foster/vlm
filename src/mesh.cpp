@@ -125,7 +125,9 @@ void Mesh::calc_panels(Wing* wing) {
             auto P3 = points(n + wing->m_sum + 2, points.cSlice());
             auto P4 = points(n + wing->m_sum + 1, points.cSlice());
 
-            Panel panel(P1, P2, P3, P4, panel_count);
+            bool leading_edge{ (i == 0) ? true : false };
+
+            Panel panel(P1, P2, P3, P4, panel_count,leading_edge);
 
             panels.push_back(panel);
 
