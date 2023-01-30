@@ -4,9 +4,12 @@
 
 #include <mesh.hpp>
 #include <aerofoil.hpp>
+#include <wake.hpp>
 
 class Mesh;
 class MultiMesh;
+class Wake;
+
 class Wing;
 class Section;
 
@@ -37,6 +40,7 @@ class Wing {
 public:
     int n;
     std::vector<Section> sections{};
+    std::vector<std::shared_ptr<Wake>> wakes;
     int n_sections{ 0 };
     int m_sum{ 0 };
 
